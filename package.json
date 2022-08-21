@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/PinsonJulien/odin-restaurant-page/issues"
   },
-  "homepage": "https://github.com/PinsonJulien/odin-restaurant-page#readme",
+  "homepage": "https://pinsonjulien.github.io/odin-restaurant-page/",
   "devDependencies": {
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
