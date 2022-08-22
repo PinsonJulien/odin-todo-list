@@ -4,3 +4,4 @@ import '../src/css/globals.css';
 import '../src/css/main.css';
 
 console.log("test");
+console.log("test");

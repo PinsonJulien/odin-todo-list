@@ -7,4 +7,4 @@ See the result [here](https://pinsonjulien.github.io/odin-restaurant-page/)
 Currently none
 
 ## Possible improvements
-- Dist folder should not be uploaded with git, it would be better to manage the webpack build from github itself, OR, build in a separate branch.
+Currently none
