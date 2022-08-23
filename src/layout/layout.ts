@@ -17,11 +17,16 @@ export default class Layout {
       this.main,
       this.footer
     );
+    const brand = document.createElement('p');
+    brand.textContent = "Pizza di Tonio";
     const menu = ['Home', 'Menu', 'Contact'];
     const nav = new Menu(menu);
     nav.getRoot().setAttribute('id', 'layout-menu');
 
-    this.header.appendChild(nav.getRoot());
+    this.header.append(
+      brand,
+      nav.getRoot()
+    );
     
     const pFooter = document.createElement('p');
     pFooter.textContent = "Created by Julien Pinson for The Odin Project, 2022 ";
