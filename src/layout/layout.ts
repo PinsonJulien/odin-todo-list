@@ -1,12 +1,13 @@
-import Menu from "./menu";
+import Component from "../components/component";
+import Navbar from "./navbar";
 
-export default class Layout {
-  private readonly root = document.createElement('div');
+export default class Layout extends Component {
   private readonly header = document.createElement('header');
   private readonly main = document.createElement('main');
   private readonly footer = document.createElement('footer');
   
-  constructor () {
+  constructor (menu: Navbar) {
+    super();
     this.root.setAttribute('id', 'layout');
     this.header.setAttribute('id', 'layout-header');
     this.main.setAttribute('id', 'layout-main');
@@ -19,13 +20,12 @@ export default class Layout {
     );
     const brand = document.createElement('p');
     brand.textContent = "Pizza di Tonio";
-    const menu = ['Home', 'Menu', 'Contact'];
-    const nav = new Menu(menu);
-    nav.getRoot().setAttribute('id', 'layout-menu');
+    
+    menu.getRoot().setAttribute('id', 'layout-menu');
 
     this.header.append(
       brand,
-      nav.getRoot()
+      menu.getRoot()
     );
     
     const pFooter = document.createElement('p');
@@ -33,11 +33,7 @@ export default class Layout {
     this.footer.append(pFooter);
   }
 
-  public getRoot() {
-    return this.root;
-  }
-
-  public replaceMainChilds(...childs: HTMLElement[]) {
-    this.main.replaceChildren(...childs);
+  public getMain() {
+    return this.main;
   }
 }
