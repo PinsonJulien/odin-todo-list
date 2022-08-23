@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack",
-    "dev": "npx webpack --watch"
+    "build": "npx webpack --mode=production",
+    "dev": "npx webpack --mode=development --watch"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   }
