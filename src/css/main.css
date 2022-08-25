@@ -237,3 +237,14 @@ a {
 #contact-page iframe {
   aspect-ratio: 16/9;
 }
+
+#error-404 {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+#error-404 h1 {
+  margin: 0;
+}

@@ -1,4 +1,5 @@
 import Component from "./components/component";
+import Error404 from "./pages/404";
 
 export interface Route {
   name: string;
@@ -8,6 +9,7 @@ export interface Route {
 
 export default class Router extends Component {
   private readonly routerLinks: RouterLink[] = [];
+  private readonly error404 = new Error404();
 
   constructor(routes: Route[]) {
     super();
@@ -26,6 +28,12 @@ export default class Router extends Component {
     this.routerLinks.forEach((link) => {
       link.getRoot().classList.remove(className);
     });
+
+    // If the page doesn't exist, 404 error
+    if (!routerLink) {
+      this.root.replaceChildren(this.error404.getRoot());
+      return;
+    }
 
     routerLink.getRoot().classList.add(className);
 

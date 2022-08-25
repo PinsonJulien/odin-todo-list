@@ -14,4 +14,4 @@ Github workflow build on gh-pages branch, this branch is set as the github page 
 Currently none
 
 ## Possible improvements
-A real rooter which first look in the URL for a path and show the proper view (or 404), so specific pages can be linked to (or shared)
+Currently none
