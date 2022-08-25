@@ -45,4 +45,4 @@ document.body.append(layout.getRoot());
 layout.getMain().appendChild(router.getRoot());
 
 // By default first page is the first element in menuPages.
-router.changeRoute(router.getRouterLinks()[0]);
+router.changeRoute(router.getRouterLinks()[1]);
