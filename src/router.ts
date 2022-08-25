@@ -11,6 +11,7 @@ export default class Router extends Component {
 
   constructor(routes: Route[]) {
     super();
+    this.root.setAttribute("id", "router");
 
     routes.forEach((route) => {
       this.routerLinks.push(
@@ -19,13 +20,21 @@ export default class Router extends Component {
     });
   }
 
-  public changeRoute(component: Route["component"]) {
-    this.root.replaceChildren(component.getRoot());
+  public changeRoute(routerLink: RouterLink) {
+    const className = "active";
+    // remove class from all router links
+    this.routerLinks.forEach((link) => {
+      link.getRoot().classList.remove(className);
+    });
+
+    routerLink.getRoot().classList.add(className);
+
+    this.root.replaceChildren(routerLink.getRoute().component.getRoot());
   }
 
   public changeRouteByPath(path: Route['path']) {
     this.changeRoute(
-      this.getRouterLinkByPath(path).getRoute().component
+      this.getRouterLinkByPath(path)
     );
   }
 
@@ -51,7 +60,7 @@ export class RouterLink extends Component<HTMLAnchorElement> {
     this.router = router;
 
     this.root.textContent = this.route.name;
-    this.root.addEventListener('click', () => this.router.changeRoute(route.component));
+    this.root.addEventListener('click', () => this.router.changeRoute(this));
   }
 
   getRoute() {

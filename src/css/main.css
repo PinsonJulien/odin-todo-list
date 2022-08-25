@@ -49,14 +49,32 @@ a {
   text-transform: uppercase;
   color: inherit;
   text-decoration: none;
+  padding-bottom: 5px;
+  border-bottom-width: 3px;
+  border-bottom-color: var(--neutral-100);
 }
+
+#layout-menu a.active {
+  border-style: solid;
+}
+
+#layout-menu a:hover {
+  border-style: solid;
+  color: var(--neutral-200);
+  border-bottom-color: var(--neutral-200);
+} 
 
 #layout-main {
   justify-self: center;
-  background-color: var(--neutral-500);
-  width: 80%;
+  background-color: var(--neutral-700);
   margin: 2em 0 2em 0;
   border-radius: 15px;
+  padding: 2em;
+}
+
+#router {
+  width: 100%;
+  height: 100%;
 }
 
 #layout-footer {
@@ -88,3 +106,39 @@ a {
 @media only screen and (min-width:  1280px) and (max-width: 1536px) {}
 /* 2XL */
 @media only screen and (min-width:  1536px) {}
+
+
+/* Pages */
+
+#home-page {
+  color: var(--neutral-200);
+  height: 100%;
+  display: grid;
+  grid-template-rows: 0.5fr 1fr;
+  grid-template-columns: 100%;
+}
+
+#home-page h1 {
+  font-family: 'Italianno', cursive;
+  font-size: 3em;
+  text-align: center;
+}
+
+#home-page h2 {
+  font-family: 'Italianno', cursive;
+  font-size: 2.7em;
+  text-align: center;
+  margin-bottom: 0.4em;
+}
+
+#home-page .container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+#home-page p {
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 1.2em;
+} 
