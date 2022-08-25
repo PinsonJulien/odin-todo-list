@@ -2,7 +2,7 @@ import Component from "./components/component";
 
 export interface Route {
   name: string;
-  path: string;
+  hash: string;
   component: Component;
 };
 
@@ -30,11 +30,14 @@ export default class Router extends Component {
     routerLink.getRoot().classList.add(className);
 
     this.root.replaceChildren(routerLink.getRoute().component.getRoot());
+
+    // change hash
+    window.location.hash = `#${routerLink.getRoute().hash}`;
   }
 
-  public changeRouteByPath(path: Route['path']) {
+  public changeRouteByHash(hash: Route['hash']) {
     this.changeRoute(
-      this.getRouterLinkByPath(path)
+      this.getRouterLinkByHash(hash)
     );
   }
 
@@ -42,8 +45,8 @@ export default class Router extends Component {
     return this.routerLinks;
   }
 
-  public getRouterLinkByPath(path: Route['path']) {
-    return this.routerLinks.find((link) => link.getRoute().path === path);
+  public getRouterLinkByHash(hash: Route['hash']) {
+    return this.routerLinks.find((link) => link.getRoute().hash === hash);
   }
 }
 

@@ -16,17 +16,17 @@ const contact =  new Contact();
 const router = new Router([
   {
     name: 'home',
-    path: '/',
+    hash: 'home',
     component: home,
   },
   {
     name: 'menu',
-    path: '/menu',
+    hash: 'menu',
     component: menu,
   },
   {
     name: 'contact',
-    path: '/contact',
+    hash: 'contact',
     component: contact,
   },
 ]);
@@ -44,5 +44,10 @@ document.body.append(layout.getRoot());
 
 layout.getMain().appendChild(router.getRoot());
 
-// By default first page is the first element in menuPages.
-router.changeRoute(router.getRouterLinks()[0]);
+// Default page is first in router if no hash is in the URL.
+// If present, removes the # from it and search for the specific page.
+router.changeRoute(
+  (window.location.hash)
+  ? router.getRouterLinkByHash(window.location.hash.slice(1))
+  : router.getRouterLinks()[0]
+);

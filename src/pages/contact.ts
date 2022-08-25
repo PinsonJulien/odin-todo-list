@@ -31,7 +31,6 @@ export default class Contact extends Component {
     this.root.append(
       h1,
       section
-
     );
   }
 }
