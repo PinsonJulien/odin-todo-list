@@ -220,3 +220,20 @@ a {
 #menu-page p {
   font-size: 1.1em;
 }
+
+#contact-page {
+  width: 50%;
+  gap: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+#contact-page section {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+#contact-page iframe {
+  aspect-ratio: 16/9;
+}
