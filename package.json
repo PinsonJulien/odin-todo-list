@@ -1,5 +1,5 @@
 {
-  "name": "odin-restaurant-page",
+  "name": "odin-todo-list",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,18 +9,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PinsonJulien/odin-restaurant-page.git"
+    "url": "git+https://github.com/PinsonJulien/odin-todo-list.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PinsonJulien/odin-restaurant-page/issues"
+    "url": "https://github.com/PinsonJulien/odin-todo-list/issues"
   },
-  "homepage": "https://pinsonjulien.github.io/odin-restaurant-page/",
+  "homepage": "https://pinsonjulien.github.io/odin-todo-list/",
   "devDependencies": {
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "sass": "^1.54.5",
+    "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",

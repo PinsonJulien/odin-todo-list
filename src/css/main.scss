@@ -1,0 +1,11 @@
+@import "./reset.css";
+@import "./globals.scss";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: $neutral-100;
+  color: $neutral-700;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}

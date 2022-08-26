@@ -1,12 +1,11 @@
 import Component from "../components/component";
-import Navbar from "./navbar";
 
 export default class Layout extends Component {
   private readonly header = document.createElement('header');
   private readonly main = document.createElement('main');
   private readonly footer = document.createElement('footer');
   
-  constructor (menu: Navbar) {
+  constructor () {
     super();
     this.root.setAttribute('id', 'layout');
     this.header.setAttribute('id', 'layout-header');
@@ -19,13 +18,10 @@ export default class Layout extends Component {
       this.footer
     );
     const brand = document.createElement('p');
-    brand.textContent = "Pizza di Tonio";
+    brand.textContent = "Odin - Todo List";
     
-    menu.getRoot().setAttribute('id', 'layout-menu');
-
     this.header.append(
       brand,
-      menu.getRoot()
     );
     
     const pFooter = document.createElement('p');
