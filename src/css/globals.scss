@@ -1,6 +1,7 @@
-/*Fonts */
+// Fonts
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+// Colors
 $teal-50: #f0fdfa;
 $teal-100: #ccfbf1;
 $teal-500: #14b8a6;
@@ -21,3 +22,11 @@ $green-400 : #4ade80;
 
 $red-300: #fca5a5;
 $red-400 : #f87171;
+
+// Screen sizes
+$xs: 0px;
+$sm: 640px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
+$xxl: 1536px;

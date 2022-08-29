@@ -9,3 +9,60 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
+
+#layout {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 
+    "header header"
+    "aside main"
+    "footer footer"
+  ;
+
+  header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "left right";
+    
+    div:first-child {
+      grid-area: left;
+    }
+
+    div:last-child {
+      grid-area: right;
+      margin-left: auto;
+    }
+  }
+
+  aside {
+    grid-area: aside;
+    background-color: $neutral-500;
+  }
+
+  main {
+    grid-area: main;
+  }
+
+  footer {
+    grid-area: footer;
+    text-align: center;
+  }
+
+  header, footer {
+    background-color: $neutral-700;
+    color: $neutral-100;
+    padding: 2em;
+  }
+
+  // burger interactions
+  @media only screen and (min-width: $xs) and (max-width: $sm) {
+    aside:not(.active) {
+      display: none;
+    }
+  }
+}
