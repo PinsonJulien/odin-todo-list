@@ -29,7 +29,13 @@ body {
     grid-template-areas: 
       "left right";
     
+    div {
+      margin: auto 0 auto 0;
+    }
+    
     div:first-child {
+      font-weight: 700;
+      font-size: 1.4em;
       grid-area: left;
     }
 
@@ -41,7 +47,58 @@ body {
 
   aside {
     grid-area: aside;
-    background-color: $neutral-500;
+    background-color: $neutral-300;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    color: $neutral-900;
+    font-size: 1em;
+    font-weight: 500;
+
+    nav {
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        li {
+          border-radius: 10px;
+          background-color: $neutral-200;
+          height: fit-content;
+          display: flex;
+
+          a {
+            width: 100%;
+            padding: 0.5em;
+            text-decoration: none;
+            color: inherit;
+          }
+        }
+
+        li:hover {
+          background-color: $neutral-100;
+        }
+      }
+    }
+
+    p {
+      font-size: 1.4em;
+      font-weight: 550;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: inherit;
+      border: none;
+      font-size: 1.3em;
+      padding: 0.5em;
+      border-radius: 10px;
+    }
+
+    button:hover {
+      background-color: $neutral-200;
+    }
   }
 
   main {

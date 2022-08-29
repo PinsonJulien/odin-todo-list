@@ -44,7 +44,73 @@ export default class Layout extends Component {
     );
 
     // Aside
-    this.aside.textContent = "test"
+    const navBox = document.createElement('nav');
+    const ulBox = document.createElement('ul');
+    const pProjects = document.createElement('p');
+    pProjects.textContent = "Projects";
+
+    const boxLinks = [
+      {
+        name: 'Inbox'
+      },
+      {
+        name: 'Today'
+      },
+      {
+        name: 'This week'
+      }
+    ];
+
+    boxLinks.forEach((link) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.setAttribute('href', '#');
+      a.textContent = link.name;
+
+      li.appendChild(a);
+      ulBox.appendChild(li);
+    });
+
+    navBox.appendChild(ulBox);
+
+    const divNewProject = document.createElement('div');
+    const btnNewProject = document.createElement('button');
+    btnNewProject.textContent = "+ New project"
+    divNewProject.appendChild(btnNewProject);
+
+    const navProject = document.createElement('nav');
+    const projectLinks = [
+      {
+        name: 'lorem ipsum'
+      },
+      {
+        name: 'lorem ipsum'
+      },
+      {
+        name: 'lorem ipsum'
+      }
+    ];
+
+    const ulProject = document.createElement('ul');
+
+    projectLinks.forEach((link) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.setAttribute('href', '#');
+      a.textContent = link.name;
+
+      li.appendChild(a);
+      ulProject.appendChild(li);
+    });
+
+    navProject.appendChild(ulProject);
+
+    this.aside.append(
+      navBox,
+      pProjects,
+      divNewProject,
+      navProject
+    );
     
     // Footer
     const pFooter = document.createElement('p');
