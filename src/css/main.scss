@@ -8,6 +8,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  text-transform: capitalize;
 }
 
 #layout {
@@ -22,30 +23,30 @@ body {
     "footer footer"
   ;
 
-  header {
+  > header {
     grid-area: header;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 
       "left right";
     
-    div {
+    > div {
       margin: auto 0 auto 0;
     }
     
-    div:first-child {
+    > div:first-child {
       font-weight: 700;
       font-size: 1.4em;
       grid-area: left;
     }
 
-    div:last-child {
+    > div:last-child {
       grid-area: right;
       margin-left: auto;
     }
   }
 
-  aside {
+  > aside {
     grid-area: aside;
     background-color: $neutral-300;
     display: flex;
@@ -56,19 +57,19 @@ body {
     font-size: 1em;
     font-weight: 500;
 
-    nav {
-      ul {
+    > nav {
+      > ul {
         display: flex;
         flex-direction: column;
         gap: 1em;
 
-        li {
+        > li {
           border-radius: 10px;
           background-color: $neutral-200;
           height: fit-content;
           display: flex;
 
-          a {
+          > a {
             width: 100%;
             padding: 0.5em;
             text-decoration: none;
@@ -76,18 +77,18 @@ body {
           }
         }
 
-        li:hover {
+        > li:hover {
           background-color: $neutral-100;
         }
       }
     }
 
-    p {
+    > p {
       font-size: 1.4em;
       font-weight: 550;
     }
 
-    button {
+    > button {
       cursor: pointer;
       background-color: inherit;
       border: none;
@@ -96,21 +97,22 @@ body {
       border-radius: 10px;
     }
 
-    button:hover {
+    > button:hover {
       background-color: $neutral-200;
     }
   }
 
-  main {
+  >main {
     grid-area: main;
   }
 
-  footer {
+  >footer {
     grid-area: footer;
     text-align: center;
   }
 
-  header, footer {
+  >header, 
+  >footer {
     background-color: $neutral-700;
     color: $neutral-100;
     padding: 2em;
@@ -118,7 +120,7 @@ body {
 
   // burger interactions
   @media only screen and (min-width: $xs) and (max-width: $sm) {
-    aside:not(.active) {
+    > aside:not(.active) {
       display: none;
     }
   }
