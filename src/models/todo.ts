@@ -15,12 +15,12 @@ export default class Todo {
     priority: Todo['priority'],
     project: Todo['project']
   ) {
-
-    this.name = name;
-    this.description = description;
-    this.dueDate = dueDate;
-    this.priority = priority;
-    this.project = project;
+    
+    this.setName(name);
+    this.setDescription(description);
+    this.setDueDate(dueDate);
+    this.setPriority(priority);
+    this.setProject(project);
   }
 
   public setName(name: Todo['name']): void {
