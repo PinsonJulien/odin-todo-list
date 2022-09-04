@@ -3,43 +3,55 @@ import Error404 from "../../views/404";
 import Route from "./route";
 import RouterLink from "./router-link";
 
-// Todo : 
-// Nested route ? #projects/id ?
-// if contains / :  nested.
-
 export default class Router extends Component {
   private routerLinks: RouterLink[] = [];
   private readonly error404 = new Error404();
 
-  constructor(routes: Route[]) {
+  constructor() {
     super();
     this.root.setAttribute("id", "router");
+  }
 
-    this.setRoutes(routes);
+  public insert(...routes: Route[]): RouterLink[] {
+    const arr: RouterLink[] = [];
+
+    routes.forEach((route) => {
+      arr.push(new RouterLink(route, this))
+    });
+
+    this.routerLinks.push(...arr);
+
+    return arr;
+  }
+
+  public getByPath (path: Route['path']) : RouterLink {
+    return this.routerLinks.find((link) => link.getRoute().path === path);
+  }
+
+  public deleteByPath (path: Route['path'] ) : RouterLink {
+    const link = this.getByPath(path);
+
+    if (link) this.routerLinks.splice(this.routerLinks.indexOf(link) , 1);
+
+    return link;
   }
 
   public setRoutes(routes: Route[]) {
     const routerLinks: Router['routerLinks'] = [];
 
     routes.forEach((route) => {
-      if (route.childs) {
-        route.childs.forEach((child) => {
-
-        });
-      } 
-      
-      else {
-        routerLinks.push(
-          new RouterLink(route, this)
-        );
-      }
+      routerLinks.push(
+        new RouterLink(route, this)
+      );
     });
  
     this.routerLinks = routerLinks;
   }
 
-  public changeRoute(routerLink: RouterLink) {
+  public switchRouteByPath(path: Route['path']): void {
     const className = "active";
+    const routerLink = this.getByPath(path);
+
     // remove class from all router links
     this.routerLinks.forEach((link) => {
       link.getRoot().classList.remove(className);
@@ -56,20 +68,18 @@ export default class Router extends Component {
     this.root.replaceChildren(routerLink.getRoute().component.getRoot());
 
     // change hash
-    window.location.hash = `#${routerLink.getRoute().hash}`;
+    this.changeHashPath(path);
   }
 
-  public changeRouteByHash(hash: Route['hash']) {
-    this.changeRoute(
-      this.getRouterLinkByHash(hash)
-    );
+  private changeHashPath(path: Route['path']) {
+    window.location.hash = `#${path}`;
+  }
+
+  public getHashPath(): Route['path'] {
+    return window.location.hash.replace('#', "");
   }
 
   public getRouterLinks() {
     return this.routerLinks;
-  }
-
-  public getRouterLinkByHash(hash: Route['hash']) {
-    return this.routerLinks.find((link) => link.getRoute().hash === hash);
   }
 }

@@ -1,34 +1,45 @@
 // CSS styles.
 import '../src/css/main.scss';
 import Layout from './layout/layout';
-import { MenuItem } from './layout/menu';
+import Router from './utils/router/router';
+import MainView from './views/mainView';
+import TodayView from './views/todayView';
+import WeekView from './views/weekView';
 
 const layout = new Layout();
 document.body.appendChild(layout.getRoot());
 
-const menuLinks: MenuItem[] = [
+const router = new Router();
+layout.getMain().appendChild(router.getRoot());
+
+const menuLinks = router.insert(
   {
-    name: 'Inbox',
+    name: 'inbox',
     path: '/',
-    onClick: () => null
+    component: new MainView()
   },
   {
-    name: 'Today',
+    name: 'today',
     path: '/today',
-    onClick: () => null
+    component: new TodayView()
   },
   {
-    name: 'This week',
+    name: 'this week',
     path: '/week',
-    onClick: () => null
-  },
-];
+    component: new WeekView()
+  }
+);
 
-layout.getMenu().insert(...menuLinks);
+menuLinks.forEach((link) => {
+  layout.getMenu().insert(link);
+});
 
+// On start look if the url contains a hash path, or default to '/'.
+const hash = router.getHashPath();
+if (hash) router.switchRouteByPath(hash);
+else router.switchRouteByPath('/');
 
-const staticRoutes = [];
-
+// notes: 
 // Every reload, static routes will be used with the dynamic ones to generate the router.
 // New projects should be find using ".filter", and the one deleted should be found when they reach 0.
 

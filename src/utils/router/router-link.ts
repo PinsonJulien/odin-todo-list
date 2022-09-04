@@ -15,7 +15,11 @@ export default class RouterLink extends Component<HTMLAnchorElement> {
     this.router = router;
 
     this.root.textContent = this.route.name;
-    this.root.addEventListener('click', () => this.router.changeRoute(this));
+    this.root.setAttribute('href', route.path);
+    this.root.addEventListener('click', (e) => {
+      this.router.switchRouteByPath(route.path);
+      e.preventDefault();
+    });
   }
 
   getRoute() {
