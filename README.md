@@ -1,4 +1,7 @@
 # Odin - Todo List
+
+# Work In Progress
+
 The 11th [project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) of The Odin Project, Javascript path.
 
 See the result [here](https://pinsonjulien.github.io/odin-todo-list/)

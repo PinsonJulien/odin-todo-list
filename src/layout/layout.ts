@@ -1,10 +1,15 @@
 import Component from "../components/component";
+import Menu from "./menu";
+import ProjectsMenu from "./projects-menu";
 
 export default class Layout extends Component {
   private readonly header = document.createElement('header');
   private readonly aside = document.createElement('aside');
   private readonly main = document.createElement('main');
   private readonly footer = document.createElement('footer');
+
+  private readonly menu;
+  private readonly menuProjects;
   
   constructor () {
     super();
@@ -44,74 +49,19 @@ export default class Layout extends Component {
     );
 
     // Aside
-    const navBox = document.createElement('nav');
-    const ulBox = document.createElement('ul');
-    const pProjects = document.createElement('p');
-    pProjects.textContent = "Projects";
-
-    const boxLinks = [
-      {
-        name: 'Inbox'
-      },
-      {
-        name: 'Today'
-      },
-      {
-        name: 'This week'
-      }
-    ];
-
-    boxLinks.forEach((link) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.setAttribute('href', '#');
-      a.textContent = link.name;
-
-      li.appendChild(a);
-      ulBox.appendChild(li);
-    });
-
-    navBox.appendChild(ulBox);
-
-    const divNewProject = document.createElement('div');
-    const btnNewProject = document.createElement('button');
-    btnNewProject.textContent = "+ New project"
-    divNewProject.appendChild(btnNewProject);
-
-    const navProject = document.createElement('nav');
-    const projectLinks = [
-      {
-        name: 'lorem ipsum'
-      },
-      {
-        name: 'lorem ipsum'
-      },
-      {
-        name: 'lorem ipsum'
-      }
-    ];
-
-    const ulProject = document.createElement('ul');
-
-    projectLinks.forEach((link) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.setAttribute('href', '#');
-      a.textContent = link.name;
-
-      li.appendChild(a);
-      ulProject.appendChild(li);
-    });
-
-    navProject.appendChild(ulProject);
-
+    const navAside = document.createElement('nav');
     this.aside.append(
-      navBox,
-      pProjects,
-      divNewProject,
-      navProject
+      navAside
     );
-    
+
+    this.menu = new Menu();
+    this.menuProjects = new ProjectsMenu();
+
+    navAside.append(
+      this.menu.getRoot(),
+      this.menuProjects.getRoot()
+    );
+
     // Footer
     const pFooter = document.createElement('p');
     pFooter.textContent = "Created by Julien Pinson for The Odin Project, 2022 ";
@@ -120,5 +70,13 @@ export default class Layout extends Component {
 
   public getMain() {
     return this.main;
+  }
+
+  public getMenu() {
+    return this.menu;
+  }
+
+  public getMenuProjects() {
+    return this.menuProjects;
   }
 }

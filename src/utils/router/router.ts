@@ -8,18 +8,34 @@ import RouterLink from "./router-link";
 // if contains / :  nested.
 
 export default class Router extends Component {
-  private readonly routerLinks: RouterLink[] = [];
+  private routerLinks: RouterLink[] = [];
   private readonly error404 = new Error404();
 
   constructor(routes: Route[]) {
     super();
     this.root.setAttribute("id", "router");
 
+    this.setRoutes(routes);
+  }
+
+  public setRoutes(routes: Route[]) {
+    const routerLinks: Router['routerLinks'] = [];
+
     routes.forEach((route) => {
-      this.routerLinks.push(
-        new RouterLink(route, this)
-      );
+      if (route.childs) {
+        route.childs.forEach((child) => {
+
+        });
+      } 
+      
+      else {
+        routerLinks.push(
+          new RouterLink(route, this)
+        );
+      }
     });
+ 
+    this.routerLinks = routerLinks;
   }
 
   public changeRoute(routerLink: RouterLink) {
