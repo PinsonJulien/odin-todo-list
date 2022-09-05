@@ -49,12 +49,11 @@ export default class Router extends Component {
   }
 
   public switchRouteByPath(path: Route['path']): void {
-    const className = "active";
     const routerLink = this.getByPath(path);
 
     // remove class from all router links
     this.routerLinks.forEach((link) => {
-      link.getRoot().classList.remove(className);
+      link.setActive(false);
     });
 
     // If the page doesn't exist, 404 error
@@ -63,7 +62,7 @@ export default class Router extends Component {
       return;
     }
 
-    routerLink.getRoot().classList.add(className);
+    routerLink.setActive(true);
 
     this.root.replaceChildren(routerLink.getRoute().component.getRoot());
 
