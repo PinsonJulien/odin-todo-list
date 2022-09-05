@@ -72,7 +72,7 @@ export default class Router extends Component {
   }
 
   private changeHashPath(path: Route['path']) {
-    window.location.hash = `#${path}`;
+    window.location.hash = path;
   }
 
   public getHashPath(): Route['path'] {

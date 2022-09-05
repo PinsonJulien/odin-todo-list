@@ -1,32 +1,40 @@
 // CSS styles.
 import '../src/css/main.scss';
+import TodoController from './controllers/todoController';
 import Layout from './layout/layout';
 import Router from './utils/router/router';
 import MainView from './views/mainView';
 import TodayView from './views/todayView';
 import WeekView from './views/weekView';
 
+// Init the structure
 const layout = new Layout();
 document.body.appendChild(layout.getRoot());
 
 const router = new Router();
 layout.getMain().appendChild(router.getRoot());
 
+const todoController = new TodoController(
+  layout.getMenuProjects(),
+  router
+);
+
+// Set static routes
 const menuLinks = router.insert(
   {
     name: 'inbox',
     path: '/',
-    component: new MainView()
+    component: new MainView(todoController)
   },
   {
     name: 'today',
     path: '/today',
-    component: new TodayView()
+    component: new TodayView(todoController)
   },
   {
     name: 'this week',
     path: '/week',
-    component: new WeekView()
+    component: new WeekView(todoController)
   }
 );
 

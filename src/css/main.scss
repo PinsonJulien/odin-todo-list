@@ -77,7 +77,8 @@ body {
             color: inherit;
           }
         }
-
+        
+        li:has(a.active),
         li:hover {
           background-color: $neutral-100;
         }

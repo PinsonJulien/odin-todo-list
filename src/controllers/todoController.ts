@@ -1,8 +1,17 @@
+import ProjectsMenu from "../layout/projects-menu";
 import Todo from "../models/todo";
+import Router from "../utils/router/router";
 
 export default class TodoController {
-  constructor() {
+  private readonly projectsMenu : ProjectsMenu;
+  private readonly router: Router;
 
+  constructor(
+    projectsMenu: TodoController['projectsMenu'],
+    router: TodoController['router']
+  ) {
+    this.projectsMenu = projectsMenu;
+    this.router = router;
   }
 
   public fetchAll() {
