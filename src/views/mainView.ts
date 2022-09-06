@@ -8,7 +8,7 @@ export default class MainView extends TodoView {
     this.root.appendChild(p);
   }
 
-  protected fetch() {
+  protected fetch() : void {
     
   }
 }

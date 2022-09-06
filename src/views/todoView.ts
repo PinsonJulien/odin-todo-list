@@ -7,7 +7,7 @@ import Label from "../components/forms/labels/label";
 import TodoController from "../controllers/todoController";
 import Todo from "../models/todo";
 
-export default class TodoView extends Component<HTMLDivElement> {
+export default abstract class TodoView extends Component<HTMLDivElement> {
   protected readonly todoController: TodoController;
   
   protected readonly title: HTMLHeadingElement;
@@ -36,9 +36,7 @@ export default class TodoView extends Component<HTMLDivElement> {
     console.log("refreshed");
   }
 
-  protected fetch() {
-
-  }
+  protected abstract fetch() : void;
 }
 
 class TodoForm extends Component<HTMLFormElement> {

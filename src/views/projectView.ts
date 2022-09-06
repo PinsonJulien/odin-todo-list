@@ -8,7 +8,7 @@ export default class ProjectView extends TodoView {
     this.root.appendChild(p);
   }
 
-  protected fetch() {
+  protected fetch() : void {
     
   }
 }

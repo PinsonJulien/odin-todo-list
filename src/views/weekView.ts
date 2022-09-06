@@ -8,7 +8,7 @@ export default class WeekView extends TodoView {
     this.root.appendChild(p);
   }
 
-  protected fetch() {
+  protected fetch(): void {
     
   }
 }

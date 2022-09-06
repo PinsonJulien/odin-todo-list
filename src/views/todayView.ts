@@ -8,7 +8,7 @@ export default class TodayView extends TodoView {
     this.root.appendChild(p);
   }
 
-  protected fetch() {
+  protected fetch(): void {
     
   }
 }
