@@ -30,16 +30,23 @@ export default class TodoController {
 
   }
 
-  public create() {
-    //if (!this.validate()) return;
+  public create (todo: Todo) : boolean {
+    if (!this.validate(todo)) return false;
+    console.log(todo);
+
+    return true;
   }
 
-  public update() {
+  public update(target: Todo, updated: Todo): boolean {
     // if (!this.validate()) return;
+    if (!this.validate(updated)) return false;
+
+    return true;
   }
 
-  public delete() {
+  public delete(target: Todo): boolean {
 
+    return true;
   }
 
   // Validations
@@ -62,6 +69,8 @@ export default class TodoController {
   }
 
   public validateDueDate(dueDate: Todo['dueDate']): boolean {
+    if (isNaN(dueDate.getTime())) return false;
+
     return true;
   }
 

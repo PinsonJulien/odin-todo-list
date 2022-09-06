@@ -2,10 +2,7 @@ export default class Todo {
   private name: String;
   private description: String;
   private dueDate: Date;
-  private priority: {
-    name: String;
-    weight: number;
-  };
+  private priority: number;
   private project: String;
 
   constructor (
