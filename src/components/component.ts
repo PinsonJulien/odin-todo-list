@@ -1,8 +1,8 @@
-export default class Component<T extends HTMLElement = HTMLDivElement> {
+export default class Component<T extends HTMLElement> {
   protected readonly root;
 
-  constructor(root?: T ) {
-    this.root = root || document.createElement('div');
+  constructor(root: T ) {
+    this.root = root;
   }
 
   public getRoot() {

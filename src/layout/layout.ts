@@ -2,7 +2,7 @@ import Component from "../components/component";
 import Menu from "./menu";
 import ProjectsMenu from "./projects-menu";
 
-export default class Layout extends Component {
+export default class Layout extends Component<HTMLDivElement> {
   private readonly header = document.createElement('header');
   private readonly aside = document.createElement('aside');
   private readonly main = document.createElement('main');
@@ -12,7 +12,7 @@ export default class Layout extends Component {
   private readonly menuProjects;
   
   constructor () {
-    super();
+    super(document.createElement('div'));
     this.root.setAttribute('id', 'layout');
 
     this.root.append(

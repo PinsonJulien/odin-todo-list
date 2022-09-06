@@ -3,12 +3,12 @@ import Error404 from "../../views/404";
 import Route from "./route";
 import RouterLink from "./router-link";
 
-export default class Router extends Component {
+export default class Router extends Component<HTMLDivElement> {
   private routerLinks: RouterLink[] = [];
   private readonly error404 = new Error404();
 
   constructor() {
-    super();
+    super(document.createElement('div'));
     this.root.setAttribute("id", "router");
   }
 

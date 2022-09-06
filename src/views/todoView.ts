@@ -1,8 +1,13 @@
 import Component from "../components/component";
+import DateInput from "../components/forms/controls/inputs/date-input";
+import RangeInput from "../components/forms/controls/inputs/range-input";
+import TextInput from "../components/forms/controls/inputs/text-input";
+import Field from "../components/forms/fields/field";
+import Label from "../components/forms/labels/label";
 import TodoController from "../controllers/todoController";
 import Todo from "../models/todo";
 
-export default class TodoView extends Component {
+export default class TodoView extends Component<HTMLDivElement> {
   protected readonly todoController: TodoController;
   
   protected readonly title: HTMLHeadingElement;
@@ -11,7 +16,7 @@ export default class TodoView extends Component {
   constructor(
     todoController: TodoView['todoController']
   ) {
-    super();
+    super(document.createElement('div'));
     this.todoController = todoController;
 
     this.root.setAttribute('id', 'todo-view');
@@ -40,11 +45,11 @@ class TodoForm extends Component<HTMLFormElement> {
   protected readonly todoController : TodoController;
   protected readonly todoView: TodoView;
 
-  protected readonly nameField: TodoFormField;
-  protected readonly descriptionField: TodoFormField;
-  protected readonly dueDateField: TodoFormField;
-  protected readonly priorityField: TodoFormField;
-  protected readonly projectField: TodoFormField;
+  protected readonly nameField: Field<TextInput>;
+  protected readonly descriptionField: Field<TextInput>;
+  protected readonly dueDateField: Field<DateInput>;
+  protected readonly priorityField: Field<RangeInput>;
+  protected readonly projectField: Field<TextInput>;
 
   constructor(
     todoController: TodoController,
@@ -58,53 +63,30 @@ class TodoForm extends Component<HTMLFormElement> {
     this.root.setAttribute('id', 'todo-form');
     this.root.setAttribute('method', 'post');
 
-    const nameLabel = document.createElement('label');
-    nameLabel.textContent = 'Name:';
-    nameLabel.setAttribute('for', 'name');
-    const nameInput = document.createElement('input');
-    nameInput.setAttribute('type', 'text');
-    nameInput.setAttribute('id', 'name');
-    nameInput.setAttribute('name', 'name');
-    this.nameField = new TodoFormField(nameLabel, nameInput);
+    this.nameField = new Field<TextInput> (
+      new Label('Name:', 'name'),
+      new TextInput('name', 'name')
+    );
 
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.textContent = 'Description:';
-    descriptionLabel.setAttribute('for', 'description');
-    const descriptionInput = document.createElement('input');
-    descriptionInput.setAttribute('type', 'text');
-    descriptionInput.setAttribute('id', 'description');
-    descriptionInput.setAttribute('name', 'description');
-    this.descriptionField = new TodoFormField(descriptionLabel, descriptionInput);
+    this.descriptionField = new Field<TextInput> (
+      new Label('Description:', 'description'),
+      new TextInput('description', 'description')
+    );
 
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.textContent = 'Due date:';
-    dueDateLabel.setAttribute('for', 'dueDate');
-    const dueDateInput = document.createElement('input');
-    dueDateInput.setAttribute('type', 'date');
-    dueDateInput.setAttribute('id', 'dueDate');
-    dueDateInput.setAttribute('name', 'dueDate');
-    this.dueDateField = new TodoFormField(dueDateLabel, dueDateInput);
+    this.dueDateField = new Field<DateInput> (
+      new Label('Due date:', 'dueDate'),
+      new DateInput('dueDate', 'dueDate')
+    ); 
 
-    const priorityLabel = document.createElement('label');
-    priorityLabel.textContent = 'Priority:';
-    priorityLabel.setAttribute('for', 'priority');
-    const priorityInput = document.createElement('input');
-    priorityInput.setAttribute('type', 'range');
-    priorityInput.setAttribute('id', 'priority');
-    priorityInput.setAttribute('name', 'priority');
-    priorityInput.setAttribute('min', '0');
-    priorityInput.setAttribute('max', '5');
-    priorityInput.setAttribute('step', '1');
-    this.priorityField = new TodoFormField(priorityLabel, priorityInput);
+    this.priorityField = new Field<RangeInput> (
+      new Label('Priority:', 'priority'),
+      new RangeInput('priority', 'priority', 0, 5, 1)
+    ); 
 
-    const projectLabel = document.createElement('label');
-    projectLabel.textContent = 'Project:';
-    projectLabel.setAttribute('for', 'project');
-    const projectInput = document.createElement('input');
-    projectInput.setAttribute('type', 'text');
-    projectInput.setAttribute('id', 'project');
-    projectInput.setAttribute('name', 'project');
-    this.projectField = new TodoFormField(projectLabel, projectInput);
+    this.projectField = new Field<TextInput> (
+      new Label('Project:', 'project'),
+      new TextInput('project', 'project')
+    ); 
 
     const button = document.createElement('button');
     button.textContent = "Submit";
@@ -163,30 +145,5 @@ class TodoForm extends Component<HTMLFormElement> {
 
       this.todoView.refresh();
     }
-  }
-}
-
-class TodoFormField extends Component<HTMLDivElement> {
-  protected readonly label: HTMLLabelElement;
-  protected readonly input: HTMLInputElement | HTMLSelectElement;
-
-  constructor(
-    label: TodoFormField['label'],
-    input: TodoFormField['input']
-  ) {
-    super(document.createElement('div'));
-    this.root.classList.add('todo-form-field');
-
-    this.label = label;
-    this.input = input;
-
-    this.root.append(
-      label,
-      input
-    );
-  }
-
-  public getValue(): string {
-    return this.input.value;
   }
 }

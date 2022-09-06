@@ -1,9 +1,9 @@
 import Component from "../components/component";
 
-export default class Error404 extends Component {
+export default class Error404 extends Component<HTMLDivElement> {
 
   constructor()  {
-    super();
+    super(document.createElement('div'));
 
     this.root.setAttribute("id", "error-404");
 
