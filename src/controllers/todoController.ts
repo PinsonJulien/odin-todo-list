@@ -1,10 +1,12 @@
 import ProjectsMenu from "../layout/projects-menu";
 import Todo from "../models/todo";
+import LocalStorage from "../utils/local-storage";
 import Router from "../utils/router/router";
 
 export default class TodoController {
   private readonly projectsMenu : ProjectsMenu;
   private readonly router: Router;
+  private readonly todoLocalStorage: LocalStorage<Todo>;
 
   constructor(
     projectsMenu: TodoController['projectsMenu'],
@@ -12,6 +14,16 @@ export default class TodoController {
   ) {
     this.projectsMenu = projectsMenu;
     this.router = router;
+    this.todoLocalStorage = new LocalStorage<Todo>(
+      'todo',
+      (a, b) => {
+        return a.getDueDate().getTime() - b.getDueDate().getTime();
+      }
+    );
+
+    console.log(this.todoLocalStorage.getValues());
+    // Won't work yet : 
+    //console.log(this.todoLocalStorage.getValues()[0].getChecked());
   }
 
   public fetchAll() {
@@ -32,8 +44,8 @@ export default class TodoController {
 
   public create (todo: Todo) : boolean {
     if (!this.validate(todo)) return false;
-    console.log(todo);
-
+    
+    this.todoLocalStorage.insert(todo);
     return true;
   }
 
