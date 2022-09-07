@@ -1,4 +1,5 @@
 export default class Todo {
+  private checked: boolean = false;
   private name: String;
   private description: String;
   private dueDate: Date;
@@ -18,6 +19,14 @@ export default class Todo {
     this.setDueDate(dueDate);
     this.setPriority(priority);
     this.setProject(project);
+  }
+
+  public setChecked(checked: Todo['checked']) {
+    this.checked = checked;
+  }
+
+  public getChecked() : Todo['checked'] {
+    return this.checked;
   }
 
   public setName(name: Todo['name']): void {
