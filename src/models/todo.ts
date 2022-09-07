@@ -7,13 +7,14 @@ export default class Todo {
   private project: String;
 
   constructor (
+    checked: Todo['checked'],
     name: Todo['name'],
     description: Todo['description'],
     dueDate: Todo['dueDate'],
     priority: Todo['priority'],
     project: Todo['project']
   ) {
-    
+    this.setChecked(checked);
     this.setName(name);
     this.setDescription(description);
     this.setDueDate(dueDate);

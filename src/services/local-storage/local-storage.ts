@@ -1,15 +1,18 @@
-import { byteSize } from "./byte";
+import { byteSize } from "../../utils/byte";
 
-export default class LocalStorage<T extends Object> {
+export default class LocalStorage<T> {
+  private readonly factory: (obj: T) => T;
   private readonly key: string;
   private readonly sortingRule : (a: T, b: T) => number;
   
   private readonly values: T[];
 
   constructor(
+    factory: LocalStorage<T>['factory'],
     key: LocalStorage<T>['key'],
     sortingRule: LocalStorage<T>['sortingRule']
   ) {
+    this.factory = factory;
     this.key = key;
     this.sortingRule = sortingRule;
 
@@ -23,9 +26,15 @@ export default class LocalStorage<T extends Object> {
 
   private read() : T[] {
     const jsonData: string = window.localStorage.getItem(this.key);
-    if (jsonData) return JSON.parse(jsonData) as T[];
+    const tmp: T[] = [];
 
-    return [];
+    if (!jsonData) return [];
+
+    JSON.parse(jsonData).forEach((obj: T) => {
+      tmp.push(this.factory(obj));
+    });
+
+    return tmp;
   }
 
   public insert(value: T) {

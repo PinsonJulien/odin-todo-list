@@ -135,7 +135,14 @@ class TodoForm extends Component<HTMLFormElement> {
 
     if (!hasInvalidField) { 
       // Validation passed
-      const todo = new Todo(name, description, dueDate, priority, project);
+      const todo = new Todo(
+        false,
+        name, 
+        description, 
+        dueDate, 
+        priority, 
+        project
+      );
       const operationSucceeded = this.todoController.create(todo);
 
       // If the creation passed, refresh the page.

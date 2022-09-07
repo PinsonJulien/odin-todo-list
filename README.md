@@ -18,5 +18,6 @@ Currently none
 ## Possible improvements
 - Don't do aside menu manipulation with the controller, but allow the view to access it's parent (main)
 
-## To do 
-- generic LocalStorage should generate an object using the constructor of the generic type, so it's methods can be accessed.
+## To do
+- Update
+- Delete
