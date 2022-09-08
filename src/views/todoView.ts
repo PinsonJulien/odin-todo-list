@@ -11,9 +11,11 @@ export default abstract class TodoView extends Component<HTMLDivElement> {
   protected readonly todoController: TodoController;
   
   protected readonly title: HTMLHeadingElement;
+  protected readonly ulist: HTMLUListElement;
   protected readonly form: TodoForm;
   
   constructor(
+    title: string,
     todoController: TodoView['todoController']
   ) {
     super(document.createElement('div'));
@@ -22,21 +24,64 @@ export default abstract class TodoView extends Component<HTMLDivElement> {
     this.root.setAttribute('id', 'todo-view');
 
     this.title = document.createElement('h1');
-    this.title.textContent = "Todo"
+    this.title.textContent = title;
+
+    this.ulist = document.createElement('ul');
+
     this.form = new TodoForm(todoController, this);
 
     this.root.append(
       this.title,
-      this.form.getRoot()
-    )
+      this.ulist,
+    );
+
+    this.refresh();
   }
 
   public refresh() {
-    this.fetch();
+    const todos = this.fetch();
+    const liForm = document.createElement('li');
+    liForm.appendChild(this.form.getRoot());
+
+    this.ulist.replaceChildren(liForm);
+
+    todos.forEach((todo) => {
+      const li = document.createElement('li');
+      this.ulist.appendChild(li);
+
+      const checked = document.createElement('input');
+      checked.type = "checkbox"
+      checked.value = todo.getChecked().toString();
+
+      const name = document.createElement('p');
+      name.textContent = todo.getName();
+
+      const description = document.createElement('p');
+      description.textContent = todo.getDescription();
+
+      const dueDate = document.createElement('p');
+      dueDate.textContent = todo.getDueDate().toDateString();
+
+      const priority = document.createElement('p');
+      priority.textContent = todo.getPriority().toString();
+
+      const project = document.createElement('p');
+      project.textContent = todo.getProject();
+
+      li.append(
+        checked,
+        name,
+        description,
+        dueDate,
+        priority,
+        project
+      );
+    });
+
     console.log("refreshed");
   }
 
-  protected abstract fetch() : void;
+  protected abstract fetch() : Todo[];
 }
 
 class TodoForm extends Component<HTMLFormElement> {

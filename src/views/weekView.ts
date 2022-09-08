@@ -1,14 +1,15 @@
+import Todo from "../models/todo";
 import TodoView from "./todoView";
 
 export default class WeekView extends TodoView {
   constructor(todoController: TodoView['todoController']) {
-    super(todoController);
-    const p = document.createElement('p');
-    p.textContent = "test week";
-    this.root.appendChild(p);
+    super('Next 7 days', todoController);
   }
 
-  protected fetch(): void {
-    
+  protected fetch(): Todo[] {
+    const today = new Date();
+    const end = new Date();
+    end.setDate(today.getDate() + 7);
+    return this.todoController.fetchByDateRange(today, end);    
   }
 }

@@ -27,7 +27,14 @@ export default class TodoController {
   }
 
   public fetchByDate(d: Date): Todo[]  {
-    return this.fetchAll().filter((todo) => todo.getDueDate().getTime() === d.getTime() );
+    return this.fetchAll().filter((todo) => { 
+      const todoDate = todo.getDueDate();
+      return (
+        todoDate.getDate() === d.getDate() &&
+        todoDate.getMonth() === d.getMonth() &&
+        todoDate.getFullYear() === d.getFullYear()
+      );
+    });
   }
 
   public fetchByDateRange(d1: Date, d2: Date): Todo[]  {
@@ -49,7 +56,6 @@ export default class TodoController {
   }
 
   public update(target: Todo, updated: Todo): boolean {
-    // if (!this.validate()) return;
     if (!this.validate(updated)) return false;
 
     return true;

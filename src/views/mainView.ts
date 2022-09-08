@@ -1,14 +1,12 @@
+import Todo from "../models/todo";
 import TodoView from "./todoView";
 
 export default class MainView extends TodoView {
   constructor(todoController: TodoView['todoController']) {
-    super(todoController);
-    const p = document.createElement('p');
-    p.textContent = "test main";
-    this.root.appendChild(p);
+    super('All tasks', todoController);
   }
 
-  protected fetch() : void {
-    
+  protected fetch() : Todo[] {
+    return this.todoController.fetchAll();
   }
 }
