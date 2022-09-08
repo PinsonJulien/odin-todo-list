@@ -18,20 +18,27 @@ export default class TodoController {
     this.todoLocalStorage = new TodoLocalStorage();
   }
 
-  public fetchAll() {
-
+  public fetchAll(): Todo[] {
+    return this.todoLocalStorage.getValues();
   }
 
-  public fetchByProject() {
-
+  public fetchByProject(project: Todo['project']): Todo[]  {
+    return this.fetchAll().filter((todo) => todo.getProject() === project);
   }
 
-  public fetchByDate() {
-
+  public fetchByDate(d: Date): Todo[]  {
+    return this.fetchAll().filter((todo) => todo.getDueDate().getTime() === d.getTime() );
   }
 
-  public fetchByDateRange() {
-
+  public fetchByDateRange(d1: Date, d2: Date): Todo[]  {
+    return this.fetchAll().filter((todo) => {
+      const dateTime = todo.getDueDate().getTime();
+      return (
+        dateTime >= d1.getTime() 
+        && 
+        dateTime <= d2.getTime()
+      );
+    });
   }
 
   public create (todo: Todo) : boolean {
