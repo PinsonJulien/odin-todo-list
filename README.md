@@ -6,7 +6,7 @@ The 11th [project](https://www.theodinproject.com/lessons/node-path-javascript-t
 
 See the result [here](https://pinsonjulien.github.io/odin-todo-list/)
 
-Github workflow build on gh-pages branch, this branch is set as the github page root.
+Github workflow builds the project to the gh-pages branch, which serves as the github pages root.
 
 ## Instructions:
 - npm install
@@ -20,4 +20,5 @@ Currently none
 
 ## To do
 - Update
-- Delete
+- Design
+-
