@@ -1,5 +1,5 @@
 import Component from "../../components/component";
-import Error404 from "../../views/404";
+import Error404 from "../../pages/404";
 import Route from "./route";
 import RouterLink from "./router-link";
 
@@ -64,7 +64,12 @@ export default class Router extends Component<HTMLDivElement> {
 
     routerLink.setActive(true);
 
-    this.root.replaceChildren(routerLink.getRoute().component.getRoot());
+    const page = routerLink.getRoute().page;
+
+    this.root.replaceChildren(page.getRoot());
+
+    // Trigger refresh of page;
+    page.refresh();
 
     // change hash
     this.changeHashPath(path);

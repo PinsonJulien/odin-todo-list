@@ -1,4 +1,4 @@
-export default class Todo {
+export class Todo {
   private checked: boolean = false;
   private name: string;
   private description: string;

@@ -1,24 +1,25 @@
-import Component from "../components/component";
-import DateInput from "../components/forms/controls/inputs/date-input";
-import RangeInput from "../components/forms/controls/inputs/range-input";
-import TextInput from "../components/forms/controls/inputs/text-input";
-import Field from "../components/forms/fields/field";
-import Label from "../components/forms/labels/label";
-import TodoController from "../controllers/todoController";
-import Todo from "../models/todo";
+import Component from "../../components/component";
+import DateInput from "../../components/forms/controls/inputs/date-input";
+import RangeInput from "../../components/forms/controls/inputs/range-input";
+import TextInput from "../../components/forms/controls/inputs/text-input";
+import Field from "../../components/forms/fields/field";
+import Label from "../../components/forms/labels/label";
+import { Todo as TodoController } from "../../controllers/todo";
+import { Todo as TodoModel } from "../../models/todo";
+import Page from "../page";
 
-export default abstract class TodoView extends Component<HTMLDivElement> {
+export abstract class Todo extends Page {
   protected readonly todoController: TodoController;
-  
   protected readonly title: HTMLHeadingElement;
   protected readonly ulist: HTMLUListElement;
-  protected readonly form: TodoForm;
-  
+  protected readonly form: Form;
+
   constructor(
     title: string,
-    todoController: TodoView['todoController']
+    todoController: Todo['todoController']
   ) {
-    super(document.createElement('div'));
+    super();
+
     this.todoController = todoController;
 
     this.root.setAttribute('id', 'todo-view');
@@ -28,17 +29,16 @@ export default abstract class TodoView extends Component<HTMLDivElement> {
 
     this.ulist = document.createElement('ul');
 
-    this.form = new TodoForm(todoController, this);
+    this.form = new Form(todoController, this);
 
     this.root.append(
       this.title,
       this.ulist,
     );
-
-    this.refresh();
   }
 
-  public refresh() {
+
+  public refresh(): void {
     const todos = this.fetch();
     const liForm = document.createElement('li');
     liForm.appendChild(this.form.getRoot());
@@ -89,12 +89,12 @@ export default abstract class TodoView extends Component<HTMLDivElement> {
     console.log("refreshed");
   }
 
-  protected abstract fetch() : Todo[];
+  protected abstract fetch(): TodoModel[];
 }
 
-class TodoForm extends Component<HTMLFormElement> {
+class Form extends Component<HTMLFormElement> {
   protected readonly todoController : TodoController;
-  protected readonly todoView: TodoView;
+  protected readonly page: Todo;
 
   protected readonly nameField: Field<TextInput>;
   protected readonly descriptionField: Field<TextInput>;
@@ -104,12 +104,12 @@ class TodoForm extends Component<HTMLFormElement> {
 
   constructor(
     todoController: TodoController,
-    todoView: TodoView
+    page: Todo
   ) {
     super(document.createElement('form'));
 
     this.todoController = todoController;
-    this.todoView = todoView;
+    this.page = page;
 
     this.root.setAttribute('id', 'todo-form');
     this.root.setAttribute('method', 'post');
@@ -188,7 +188,7 @@ class TodoForm extends Component<HTMLFormElement> {
 
     if (!hasInvalidField) { 
       // Validation passed
-      const todo = new Todo(
+      const todo = new TodoModel(
         false,
         name, 
         description, 
@@ -201,7 +201,7 @@ class TodoForm extends Component<HTMLFormElement> {
       // If the creation passed, refresh the page.
       if (!operationSucceeded) return;
 
-      this.todoView.refresh();
+      this.page.refresh();
     }
   }
 }

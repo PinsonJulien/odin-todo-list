@@ -1,11 +1,11 @@
 // CSS styles.
 import '../src/css/main.scss';
-import TodoController from './controllers/todoController';
+import { Todo as TodoController } from './controllers/todo';
 import Layout from './layout/layout';
+import { All } from './pages/todo/all';
+import { Today } from './pages/todo/today';
+import { Week } from './pages/todo/week';
 import Router from './utils/router/router';
-import MainView from './views/mainView';
-import TodayView from './views/todayView';
-import WeekView from './views/weekView';
 
 // Init the structure
 const layout = new Layout();
@@ -24,17 +24,17 @@ const menuLinks = router.insert(
   {
     name: 'inbox',
     path: '/',
-    component: new MainView(todoController)
+    page: new All(todoController)
   },
   {
     name: 'today',
     path: '/today',
-    component: new TodayView(todoController)
+    page: new Today(todoController)
   },
   {
     name: 'this week',
     path: '/week',
-    component: new WeekView(todoController)
+    page: new Week(todoController)
   }
 );
 
