@@ -62,8 +62,7 @@ export default class TodoController {
   }
 
   public delete(target: Todo): boolean {
-
-    return true;
+    return this.todoLocalStorage.delete(target);
   }
 
   // Validations

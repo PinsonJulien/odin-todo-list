@@ -68,13 +68,21 @@ export default abstract class TodoView extends Component<HTMLDivElement> {
       const project = document.createElement('p');
       project.textContent = todo.getProject();
 
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = "Delete";
+      deleteBtn.addEventListener('click', (e) => {
+        this.todoController.delete(todo);
+        this.refresh();
+      });
+
       li.append(
         checked,
         name,
         description,
         dueDate,
         priority,
-        project
+        project,
+        deleteBtn
       );
     });
 

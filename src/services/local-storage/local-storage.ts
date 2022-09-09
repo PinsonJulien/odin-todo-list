@@ -24,6 +24,10 @@ export default class LocalStorage<T> {
     return this.values;
   }
 
+  private find(value: T) : number {
+    return this.values.findIndex((val) => val === value);
+  }
+
   private read() : T[] {
     const jsonData: string = window.localStorage.getItem(this.key);
     const tmp: T[] = [];
@@ -37,12 +41,23 @@ export default class LocalStorage<T> {
     return tmp;
   }
 
-  public insert(value: T) {
-    if (!this.canBeStored(value)) return;
-
+  public insert(value: T): boolean {
+    if (!this.canBeStored(value)) return false;
     this.values.push(value);
     this.sort();
     this.save();
+
+    return true;
+  }
+
+  public delete(value: T): boolean {
+    const id: number = this.find(value);
+    if (id < 0) return false;
+
+    this.values.splice(id, 1);
+
+    this.save();
+    return true;
   }
 
   private save(): void {
