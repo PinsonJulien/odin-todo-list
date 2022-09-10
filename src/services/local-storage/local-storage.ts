@@ -50,6 +50,16 @@ export default class LocalStorage<T> {
     return true;
   }
 
+  public update(target: T, value: T): boolean {
+    const id: number = this.find(target);
+    if (id < 0) return false;
+
+    this.values[id] = value;
+
+    this.save();
+    return true;
+  }
+
   public delete(value: T): boolean {
     const id: number = this.find(value);
     if (id < 0) return false;

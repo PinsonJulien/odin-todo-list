@@ -31,7 +31,6 @@ export abstract class Todo extends Page {
     this.ulist = document.createElement('ul');
 
     this.newTodo = new NewTodo(this.todoController, this);
-    //this.form = new Form(todoController, this);
 
     this.root.append(
       this.title,
@@ -39,67 +38,28 @@ export abstract class Todo extends Page {
     );
   }
 
-
   public refresh(): void {
     const todos = this.fetch();
-    const liForm = document.createElement('li');
-    liForm.appendChild(this.newTodo.getRoot());
 
-    this.ulist.replaceChildren(liForm);
+    this.ulist.replaceChildren(this.newTodo.getRoot());
 
     todos.forEach((todo) => {
-      const li = document.createElement('li');
-      this.ulist.appendChild(li);
-
-      const checked = document.createElement('input');
-      checked.type = "checkbox"
-      checked.value = todo.getChecked().toString();
-
-      const name = document.createElement('p');
-      name.textContent = todo.getName();
-
-      const description = document.createElement('p');
-      description.textContent = todo.getDescription();
-
-      const dueDate = document.createElement('p');
-      dueDate.textContent = todo.getDueDate().toDateString();
-
-      const priority = document.createElement('p');
-      priority.textContent = todo.getPriority().toString();
-
-      const project = document.createElement('p');
-      project.textContent = todo.getProject();
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = "Delete";
-      deleteBtn.addEventListener('click', (e) => {
-        this.todoController.delete(todo);
-        this.refresh();
-      });
-
-      li.append(
-        checked,
-        name,
-        description,
-        dueDate,
-        priority,
-        project,
-        deleteBtn
+      this.ulist.appendChild(
+        new TodoListItem(todo, this.todoController).getRoot()
       );
     });
-
-    console.log("refreshed");
   }
 
   protected abstract fetch(): TodoModel[];
 }
 
-class NewTodo extends Twofold {
+class NewTodo extends Twofold<HTMLLIElement> {
   constructor(
     todoController: TodoController,
     page: Todo,
   ) {
     super(
+      document.createElement('li'),
       new Component<HTMLDivElement>(document.createElement('div')),
       new Form(
         todoController,
@@ -131,7 +91,110 @@ class NewTodo extends Twofold {
 
     this.frontComponent.getRoot().append(btn);
   }
-} 
+}
+
+class TodoListItem extends Twofold<HTMLLIElement> {
+  protected readonly todoController: TodoController;
+  protected readonly checked;
+  protected readonly name;
+  protected readonly description;
+  protected readonly dueDate;
+  protected readonly priority;
+  protected readonly project;
+
+  protected todo: TodoModel;
+
+  constructor(
+    todo: TodoModel,
+    todoController : TodoController
+  ) {
+    super(
+      document.createElement('li'),
+      new Component<HTMLDivElement>(document.createElement('div')),
+      new Form(
+        todoController,
+        (
+          (todo: TodoModel) : void => {
+            this.update(todo);
+          }
+        ),
+        (
+          () : void => {
+            this.changeSide(false);
+          }
+        )
+      )
+    );
+
+    this.todoController = todoController;
+    
+    // Html elements
+    this.checked = document.createElement('input');
+    this.checked.type = "checkbox";
+    this.name = document.createElement('p');
+    this.description = document.createElement('p');
+    this.dueDate = document.createElement('p');
+    this.priority = document.createElement('p');
+    this.project = document.createElement('p');
+
+    this.checked.addEventListener('click', (e) => {
+      this.todo.setChecked(this.todo.getChecked());
+      this.update(this.todo);
+    });
+
+    const updateButton = document.createElement('button');
+    updateButton.textContent = "Update";
+    updateButton.addEventListener('click', (e) => {
+      this.changeSide(true);
+    });
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener('click', (e) => {
+      this.todoController.delete(this.todo);
+      
+      this.root.remove();
+    });
+
+
+    this.frontComponent.getRoot().append(
+      this.checked,
+      this.name,
+      this.description,
+      this.dueDate,
+      this.priority,
+      this.project,
+      updateButton,
+      deleteButton
+    );
+
+    this.setTodo(todo);
+  }
+
+  private setTodo (todo: TodoModel) : void {
+    this.todo = todo;
+    
+    this.checked.value = this.todo.getChecked().toString();
+    this.name.textContent = this.todo.getName();
+    this.description.textContent = this.todo.getDescription();
+    this.dueDate.textContent = this.todo.getDueDate().toDateString();
+    this.priority.textContent = this.todo.getPriority().toString();
+    this.project.textContent = this.todo.getProject();
+
+    (this.backComponent as Form).setFields(todo);
+  }
+
+  private update (todo: TodoModel) : void {
+    this.changeSide(false);
+
+    const operationSucceeded = this.todoController.update(this.todo, todo);
+
+    // If the update passed, change the UI.
+    if (!operationSucceeded) return;
+
+    this.setTodo(todo);
+  }
+}
 
 class Form extends Component<HTMLFormElement> {
   protected readonly todoController : TodoController;
@@ -209,6 +272,14 @@ class Form extends Component<HTMLFormElement> {
       e.preventDefault();
       this.validation();      
     });
+  }
+
+  public setFields (todo: TodoModel) : void {
+    this.nameField.setValue(todo.getName());
+    this.descriptionField.setValue(todo.getDescription());
+    this.dueDateField.getControl().getRoot().valueAsDate = todo.getDueDate();
+    this.priorityField.setValue(todo.getPriority().toString());
+    this.projectField.setValue(todo.getProject());
   }
 
   protected validation () {

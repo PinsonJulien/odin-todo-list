@@ -58,6 +58,7 @@ export class Todo {
   public update(target: TodoModel, updated: TodoModel): boolean {
     if (!this.validate(updated)) return false;
 
+    this.todoLocalStorage.update(target, updated);
     return true;
   }
 

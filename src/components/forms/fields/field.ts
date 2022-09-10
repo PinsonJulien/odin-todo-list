@@ -34,6 +34,10 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
     return this.control.getValue();
   }
 
+  public setValue(value: string): void {
+    this.control.setValue(value);
+  }
+
   public setValid(valid: boolean) : void {
     if (valid) return;
   }

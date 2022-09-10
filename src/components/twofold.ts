@@ -1,17 +1,18 @@
 import Component from "./component";
 
 // This class allows to switch between two components.
-export default abstract class Twofold extends Component<HTMLDivElement> {
+export default abstract class Twofold<T extends HTMLElement> extends Component<T> {
   protected readonly frontComponent: Component<any>;
   protected readonly backComponent: Component<any>;
 
   protected currentSide: boolean = false;
 
   constructor(
-    frontComponent: Twofold['frontComponent'],
-    backComponent: Twofold['backComponent']
+    root: T,
+    frontComponent: Twofold<T>['frontComponent'],
+    backComponent: Twofold<T>['backComponent']
   ) {
-    super(document.createElement('div'));
+    super(root);
     
     this.frontComponent = frontComponent;
     this.backComponent = backComponent;
@@ -20,7 +21,7 @@ export default abstract class Twofold extends Component<HTMLDivElement> {
     this.changeSide(false);
   }
 
-  protected changeSide(side: Twofold['currentSide']) : void {
+  protected changeSide(side: Twofold<T>['currentSide']) : void {
     this.currentSide = side;
 
     this.root.replaceChildren(

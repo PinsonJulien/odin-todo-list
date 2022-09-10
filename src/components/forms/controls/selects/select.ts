@@ -9,4 +9,8 @@ export default class Select extends Component<HTMLSelectElement> implements Cont
   public getValue(): string {
     return this.root.value;
   }
+
+  public setValue(value: string): void {
+    this.root.value = value;
+  }
 }
