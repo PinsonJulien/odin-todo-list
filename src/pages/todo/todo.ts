@@ -4,6 +4,7 @@ import RangeInput from "../../components/forms/controls/inputs/range-input";
 import TextInput from "../../components/forms/controls/inputs/text-input";
 import Field from "../../components/forms/fields/field";
 import Label from "../../components/forms/labels/label";
+import Twofold from "../../components/twofold";
 import { Todo as TodoController } from "../../controllers/todo";
 import { Todo as TodoModel } from "../../models/todo";
 import Page from "../page";
@@ -12,7 +13,7 @@ export abstract class Todo extends Page {
   protected readonly todoController: TodoController;
   protected readonly title: HTMLHeadingElement;
   protected readonly ulist: HTMLUListElement;
-  protected readonly form: Form;
+  protected readonly newTodo: NewTodo;
 
   constructor(
     title: string,
@@ -29,7 +30,8 @@ export abstract class Todo extends Page {
 
     this.ulist = document.createElement('ul');
 
-    this.form = new Form(todoController, this);
+    this.newTodo = new NewTodo(this.todoController, this);
+    //this.form = new Form(todoController, this);
 
     this.root.append(
       this.title,
@@ -41,7 +43,7 @@ export abstract class Todo extends Page {
   public refresh(): void {
     const todos = this.fetch();
     const liForm = document.createElement('li');
-    liForm.appendChild(this.form.getRoot());
+    liForm.appendChild(this.newTodo.getRoot());
 
     this.ulist.replaceChildren(liForm);
 
@@ -92,9 +94,49 @@ export abstract class Todo extends Page {
   protected abstract fetch(): TodoModel[];
 }
 
+class NewTodo extends Twofold {
+  constructor(
+    todoController: TodoController,
+    page: Todo,
+  ) {
+    super(
+      new Component<HTMLDivElement>(document.createElement('div')),
+      new Form(
+        todoController,
+        (
+          (todo: TodoModel) : void => {
+            this.changeSide(false);
+
+            const operationSucceeded = todoController.create(todo);
+
+            // If the creation passed, refresh the page.
+            if (!operationSucceeded) return;
+
+            page.refresh();
+          }
+        ),
+        (
+          () : void => {
+            this.changeSide(false);
+          }
+        )
+      )
+    );
+    
+    const btn = document.createElement('button');
+    btn.textContent = "Add new";
+    btn.addEventListener('click', (e) => {
+      this.changeSide(true);
+    })
+
+    this.frontComponent.getRoot().append(btn);
+  }
+} 
+
 class Form extends Component<HTMLFormElement> {
   protected readonly todoController : TodoController;
-  protected readonly page: Todo;
+  protected readonly submit: (todo: TodoModel) => any;
+  protected readonly cancel: () => any;
 
   protected readonly nameField: Field<TextInput>;
   protected readonly descriptionField: Field<TextInput>;
@@ -103,13 +145,15 @@ class Form extends Component<HTMLFormElement> {
   protected readonly projectField: Field<TextInput>;
 
   constructor(
-    todoController: TodoController,
-    page: Todo
+    todoController : Form['todoController'],
+    submit: Form['submit'],
+    cancel: Form['cancel']
   ) {
     super(document.createElement('form'));
 
     this.todoController = todoController;
-    this.page = page;
+    this.submit = submit;
+    this.cancel = cancel;
 
     this.root.setAttribute('id', 'todo-form');
     this.root.setAttribute('method', 'post');
@@ -139,8 +183,17 @@ class Form extends Component<HTMLFormElement> {
       new TextInput('project', 'project')
     ); 
 
-    const button = document.createElement('button');
-    button.textContent = "Submit";
+    const submitButton = document.createElement('button');
+    submitButton.textContent = "Submit";
+
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = "Cancel";
+    cancelButton.type = "button";
+    cancelButton.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      this.cancel();
+    });
 
     this.root.append(
       this.nameField.getRoot(),
@@ -148,7 +201,8 @@ class Form extends Component<HTMLFormElement> {
       this.dueDateField.getRoot(),
       this.priorityField.getRoot(),
       this.projectField.getRoot(),
-      button
+      submitButton,
+      cancelButton
     );
   
     this.root.addEventListener('submit', (e) => {
@@ -196,12 +250,8 @@ class Form extends Component<HTMLFormElement> {
         priority, 
         project
       );
-      const operationSucceeded = this.todoController.create(todo);
 
-      // If the creation passed, refresh the page.
-      if (!operationSucceeded) return;
-
-      this.page.refresh();
+      this.submit(todo);
     }
   }
 }
