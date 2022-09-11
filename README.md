@@ -16,9 +16,9 @@ Github workflow builds the project to the gh-pages branch, which serves as the g
 Currently none
 
 ## Possible improvements
-- Don't do aside menu manipulation with the controller, but allow the view to access it's parent (main)
+Currently none
 
 ## To do
-- Update
-- Design
--
+- Indicate remaining storage space (using INTL ?)
+- 404 page design
+- Overall design

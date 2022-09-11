@@ -22,6 +22,10 @@ export default class Menu extends Component<HTMLDivElement> {
     });
   }
 
+  public remove(anchor: RouterLink) : void {
+    anchor.getRoot().parentElement.remove();
+  }
+
   public clear() : void {
     this.ul.replaceChildren();
   }
