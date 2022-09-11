@@ -1,4 +1,5 @@
 import Component from "../components/component";
+import Burger from "../components/svg/burger";
 import Menu from "./menu";
 import ProjectsMenu from "./projects-menu";
 
@@ -30,8 +31,10 @@ export default class Layout extends Component<HTMLDivElement> {
     brand.textContent = "Odin - Todo List";
 
     const burgerBtn = document.createElement('button');
-    burgerBtn.textContent = "burger";
+    const burgerIcon = new Burger();
+    burgerBtn.appendChild(burgerIcon.getRoot());
     burgerBtn.addEventListener('click', () => {
+      burgerBtn.classList.toggle('active');
       this.aside.classList.toggle('active');
     });
 

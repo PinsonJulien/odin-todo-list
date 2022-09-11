@@ -1,4 +1,4 @@
-export default class Component<T extends HTMLElement> {
+export default class Component<T extends (HTMLElement | SVGElement)> {
   protected readonly root;
 
   constructor(root: T ) {

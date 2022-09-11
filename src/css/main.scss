@@ -42,7 +42,38 @@ body {
 
     > div:last-child {
       grid-area: right;
-      margin-left: auto;
+      margin: auto 0 auto auto;
+
+      > button:has(svg.burger) {
+        display: flex;
+        padding: 0;
+        background-color: inherit;
+        border: none;
+        cursor: pointer;
+
+        > svg {
+          width: 40px;
+          height: 40px;
+          stroke: $neutral-200;
+          stroke-width: 0.15em;
+          
+          > path {
+            transition: opacity 1s;
+          }
+        }
+      }
+
+      > button:has(svg.burger).active,
+      > button:has(svg.burger):hover {
+        > svg {
+          stroke: $neutral-100;
+
+          > path:first-child,
+          > path:last-child {
+            opacity: 0;            
+          }
+        }
+      }
     }
   }
 
@@ -137,6 +168,16 @@ body {
       display: none;
     }
   }
+
+  @media only screen and (min-width: $sm) {
+    > header {
+
+      button:has(.burger) {
+        display: none !important;
+      }
+    }
+  }
+
 }
 
 #todo-view {
