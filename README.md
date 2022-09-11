@@ -19,6 +19,4 @@ Currently none
 Currently none
 
 ## To do
-- Indicate remaining storage space (using INTL ?)
-- 404 page design
 - Overall design

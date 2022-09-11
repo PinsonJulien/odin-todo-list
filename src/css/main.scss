@@ -152,3 +152,22 @@ body {
     }
   }
 }
+
+#error-404 {
+  padding-top: 3em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 2em;
+  > h1 {
+    text-transform:uppercase;
+    font-size: 2.5em;
+    font-weight: 700;
+  }
+
+  > p {
+    font-size: 2em;
+    font-weight: 500;
+  }
+}
