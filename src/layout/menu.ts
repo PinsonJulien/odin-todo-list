@@ -6,6 +6,7 @@ export default class Menu extends Component<HTMLDivElement> {
 
   constructor(...anchors: RouterLink[]) {
     super(document.createElement('div'));
+    this.root.classList.add('menu');
 
     this.ul = document.createElement('ul');
     this.root.appendChild(this.ul);

@@ -48,39 +48,49 @@ body {
 
   > aside {
     grid-area: aside;
-    background-color: $neutral-300;
+    background-color: $neutral-200;
     padding: 1em;
     color: $neutral-900;
     font-size: 1em;
     font-weight: 500;
+    min-width: 150px;
 
     > nav {
       display: flex;
       flex-direction: column;
       gap: 1em;
 
-      ul {
+      > .menu {
         display: flex;
         flex-direction: column;
         gap: 1em;
-
-        li {
-          border-radius: 10px;
-          background-color: $neutral-200;
-          height: fit-content;
-          display: flex;
-
-          a {
-            width: 100%;
-            padding: 0.5em;
-            text-decoration: none;
-            color: inherit;
-          }
+        > p {
+          font-size: 1.4em;
         }
-        
-        li:has(a.active),
-        li:hover {
-          background-color: $neutral-100;
+
+        > ul {
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
+  
+          > li {
+            border-radius: 10px;
+            background-color: $neutral-100;
+            height: fit-content;
+            display: flex;
+  
+            a {
+              width: 100%;
+              padding: 0.5em;
+              text-decoration: none;
+              color: inherit;
+            }
+          }
+          
+          li:has(a.active),
+          li:hover {
+            background-color: $neutral-300;
+          }
         }
       }
     }

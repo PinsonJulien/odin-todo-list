@@ -23,7 +23,7 @@ export abstract class Todo extends Page {
 
     this.todoController = todoController;
 
-    this.root.setAttribute('id', 'todo-view');
+    this.root.setAttribute('id', 'todo-page');
 
     this.title = document.createElement('h1');
     this.title.textContent = title;
