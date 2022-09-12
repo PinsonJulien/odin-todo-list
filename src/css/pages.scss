@@ -64,17 +64,7 @@
           width: 100%;
           
           button {
-            width: 100%;
-            //width: fit-content;
-            svg {
-              height: 50px;
-              width: 50px;
-              stroke: $neutral-600;
-              stroke-width: 0.15em;
-              path {
-                
-              }
-            }
+            font-size: 1em;
           }
         }
       } 

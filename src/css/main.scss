@@ -18,11 +18,17 @@ button {
   cursor: pointer;
 }
 
-button:has(svg) {
+button:has(.material-symbols-rounded) {
   padding: 0;
   background-color: inherit;
   border: none;
-  svg {
-    aspect-ratio: 1/1;
-  }
+}
+
+.material-symbols-rounded {
+  font-size: inherit;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
 }

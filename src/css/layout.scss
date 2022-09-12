@@ -31,28 +31,9 @@
       grid-area: right;
       margin: auto 0 auto auto;
 
-      > button:has(svg.burger) {        
-        > svg {
-
-          stroke: $neutral-200;
-          stroke-width: 0.15em;
-          
-          > path {
-            transition: opacity 1s;
-          }
-        }
-      }
-
-      > button:has(svg.burger).active,
-      > button:has(svg.burger):hover {
-        > svg {
-          stroke: $neutral-100;
-
-          > path:first-child,
-          > path:last-child {
-            opacity: 0;            
-          }
-        }
+      > button {
+        color: $neutral-200;
+        font-size: 1.5em;
       }
     }
   }
@@ -121,7 +102,7 @@
   >footer {
     background-color: $neutral-700;
     color: $neutral-100;
-    padding: 2em;
+    padding: 1em;
   }
 
   // burger interactions

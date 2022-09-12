@@ -1,5 +1,6 @@
 import Component from "../components/component";
-import Burger from "../components/svg/burger";
+import Burger from "../components/icons/burger";
+import HorizontalRule from "../components/icons/horizontal-rule";
 import Menu from "./menu";
 import ProjectsMenu from "./projects-menu";
 
@@ -31,14 +32,17 @@ export default class Layout extends Component<HTMLDivElement> {
     brand.textContent = "Odin - Todo List";
 
     const burgerBtn = document.createElement('button');
-    burgerBtn.innerHTML = `
-    <span class="material-symbols-outlined">
-menu
-</span>`
-    //const burgerIcon = new Burger();
-    //burgerBtn.appendChild(burgerIcon.getRoot());
+    const burgerIcon = new Burger();
+    const minusIcon = new HorizontalRule();
+    burgerBtn.appendChild(burgerIcon.getRoot());
+    
     burgerBtn.addEventListener('click', () => {
-      burgerBtn.classList.toggle('active');
+      burgerBtn.replaceChildren(
+        (burgerBtn.contains(burgerIcon.getRoot())
+        ? minusIcon.getRoot()
+        : burgerIcon.getRoot()
+        )
+      )
       this.aside.classList.toggle('active');
     });
 
