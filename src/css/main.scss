@@ -22,4 +22,7 @@ button:has(svg) {
   padding: 0;
   background-color: inherit;
   border: none;
+  svg {
+    aspect-ratio: 1/1;
+  }
 }

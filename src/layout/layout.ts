@@ -31,8 +31,12 @@ export default class Layout extends Component<HTMLDivElement> {
     brand.textContent = "Odin - Todo List";
 
     const burgerBtn = document.createElement('button');
-    const burgerIcon = new Burger();
-    burgerBtn.appendChild(burgerIcon.getRoot());
+    burgerBtn.innerHTML = `
+    <span class="material-symbols-outlined">
+menu
+</span>`
+    //const burgerIcon = new Burger();
+    //burgerBtn.appendChild(burgerIcon.getRoot());
     burgerBtn.addEventListener('click', () => {
       burgerBtn.classList.toggle('active');
       this.aside.classList.toggle('active');

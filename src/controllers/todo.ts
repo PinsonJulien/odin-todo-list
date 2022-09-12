@@ -111,7 +111,6 @@ export class Todo {
   public validate(todo: TodoModel): boolean {
     return ( 
       this.validateName(todo.getName()) ||
-      this.validateDescription(todo.getDescription()) ||
       this.validateDueDate(todo.getDueDate()) ||
       this.validatePriority(todo.getPriority()) ||
       this.validateProject(todo.getProject())
@@ -119,10 +118,6 @@ export class Todo {
   }
 
   public validateName(name: TodoModel['name']): boolean {
-    return true;
-  }
-
-  public validateDescription(description: TodoModel['description']): boolean {
     return true;
   }
 

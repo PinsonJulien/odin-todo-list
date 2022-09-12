@@ -7,9 +7,7 @@ export default class TodoLocalStorage extends LocalStorage<Todo> {
     super(
       (obj: Todo): Todo => {
         return new Todo(
-          obj['checked'],
           obj['name'],
-          obj['description'],
           new Date(obj['dueDate']),
           obj['priority'],
           obj['project']

@@ -1,4 +1,4 @@
-#todo-view {
+.todo-page {
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -7,7 +7,7 @@
     font-size: 1.8em;
   }
 
-  > #todo-form {
+  .todo-form {
     margin: 0 auto 0 auto;
     width: 50%;
     display: flex;
@@ -18,6 +18,66 @@
       display: flex;
       flex-direction: column;
       gap: 0.5em;
+    }
+  }
+
+  > ul {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2em;
+
+    > li:first-child {
+      margin: auto;
+    }
+
+    > .todo-list-item {
+      > div {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-template-areas: 
+          "name" 
+          "project" 
+          "due-date" 
+          "priority" 
+          "actions"
+        ;
+        gap: 1em;
+
+        > .name {
+          grid-area: name;
+          color: red;
+        }
+        > .due-date {
+          grid-area: due-date;
+        }
+        > .priority {
+          grid-area: priority;
+        }
+        > .project {
+          grid-area: project;
+        }
+
+        > .actions {
+          grid-area: actions;
+          display: flex;
+          width: 100%;
+          
+          button {
+            width: 100%;
+            //width: fit-content;
+            svg {
+              height: 50px;
+              width: 50px;
+              stroke: $neutral-600;
+              stroke-width: 0.15em;
+              path {
+                
+              }
+            }
+          }
+        }
+      } 
     }
   }
 }

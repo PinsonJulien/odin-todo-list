@@ -4,6 +4,8 @@ import RangeInput from "../../components/forms/controls/inputs/range-input";
 import TextInput from "../../components/forms/controls/inputs/text-input";
 import Field from "../../components/forms/fields/field";
 import Label from "../../components/forms/labels/label";
+import Delete from "../../components/svg/delete";
+import Edit from "../../components/svg/edit";
 import Twofold from "../../components/twofold";
 import { Todo as TodoController } from "../../controllers/todo";
 import { Todo as TodoModel } from "../../models/todo";
@@ -22,8 +24,7 @@ export abstract class Todo extends Page {
     super();
 
     this.todoController = todoController;
-
-    this.root.setAttribute('id', 'todo-page');
+    this.root.classList.add('todo-page');
 
     this.title = document.createElement('h1');
     this.title.textContent = title;
@@ -95,9 +96,7 @@ class NewTodo extends Twofold<HTMLLIElement> {
 
 class TodoListItem extends Twofold<HTMLLIElement> {
   protected readonly todoController: TodoController;
-  protected readonly checked;
   protected readonly name;
-  protected readonly description;
   protected readonly dueDate;
   protected readonly priority;
   protected readonly project;
@@ -127,45 +126,45 @@ class TodoListItem extends Twofold<HTMLLIElement> {
     );
 
     this.todoController = todoController;
+    this.root.classList.add('todo-list-item');
     
     // Html elements
-    this.checked = document.createElement('input');
-    this.checked.type = "checkbox";
     this.name = document.createElement('p');
-    this.description = document.createElement('p');
+    this.name.classList.add('name');
     this.dueDate = document.createElement('p');
+    this.dueDate.classList.add('due-date');
     this.priority = document.createElement('p');
+    this.priority.classList.add('priority');
     this.project = document.createElement('p');
-
-    this.checked.addEventListener('click', (e) => {
-      this.todo.setChecked(this.todo.getChecked());
-      this.update(this.todo);
-    });
+    this.project.classList.add('project');
 
     const updateButton = document.createElement('button');
-    updateButton.textContent = "Update";
+    updateButton.appendChild(new Edit().getRoot());
     updateButton.addEventListener('click', (e) => {
       this.changeSide(true);
     });
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = "Delete";
+    deleteButton.appendChild(new Delete().getRoot());
     deleteButton.addEventListener('click', (e) => {
       this.todoController.delete(this.todo);
       
       this.root.remove();
     });
 
+    const actionDiv = document.createElement('div');
+    actionDiv.classList.add('actions');
+    actionDiv.append(
+      updateButton,
+      deleteButton
+    );
 
     this.frontComponent.getRoot().append(
-      this.checked,
       this.name,
-      this.description,
       this.dueDate,
       this.priority,
       this.project,
-      updateButton,
-      deleteButton
+      actionDiv,
     );
 
     this.setTodo(todo);
@@ -174,9 +173,7 @@ class TodoListItem extends Twofold<HTMLLIElement> {
   private setTodo (todo: TodoModel) : void {
     this.todo = todo;
     
-    this.checked.value = this.todo.getChecked().toString();
     this.name.textContent = this.todo.getName();
-    this.description.textContent = this.todo.getDescription();
     this.dueDate.textContent = this.todo.getDueDate().toDateString();
     this.priority.textContent = this.todo.getPriority().toString();
     this.project.textContent = this.todo.getProject();
@@ -202,7 +199,6 @@ class Form extends Component<HTMLFormElement> {
   protected readonly cancel: () => any;
 
   protected readonly nameField: Field<TextInput>;
-  protected readonly descriptionField: Field<TextInput>;
   protected readonly dueDateField: Field<DateInput>;
   protected readonly priorityField: Field<RangeInput>;
   protected readonly projectField: Field<TextInput>;
@@ -218,17 +214,12 @@ class Form extends Component<HTMLFormElement> {
     this.submit = submit;
     this.cancel = cancel;
 
-    this.root.setAttribute('id', 'todo-form');
+    this.root.classList.add('todo-form');
     this.root.setAttribute('method', 'post');
 
     this.nameField = new Field<TextInput> (
       new Label('Name:', 'name'),
       new TextInput('name', 'name')
-    );
-
-    this.descriptionField = new Field<TextInput> (
-      new Label('Description:', 'description'),
-      new TextInput('description', 'description')
     );
 
     this.dueDateField = new Field<DateInput> (
@@ -258,14 +249,19 @@ class Form extends Component<HTMLFormElement> {
       this.cancel();
     });
 
+    const actionDiv = document.createElement('div');
+    actionDiv.classList.add('actions');
+    actionDiv.append(
+      submitButton,
+      cancelButton,
+    );
+
     this.root.append(
       this.nameField.getRoot(),
-      this.descriptionField.getRoot(),
       this.dueDateField.getRoot(),
       this.priorityField.getRoot(),
       this.projectField.getRoot(),
-      submitButton,
-      cancelButton
+      actionDiv,
     );
   
     this.root.addEventListener('submit', (e) => {
@@ -276,7 +272,6 @@ class Form extends Component<HTMLFormElement> {
 
   public setFields (todo: TodoModel) : void {
     this.nameField.setValue(todo.getName());
-    this.descriptionField.setValue(todo.getDescription());
     this.dueDateField.getControl().getRoot().valueAsDate = todo.getDueDate();
     this.priorityField.setValue(todo.getPriority().toString());
     this.projectField.setValue(todo.getProject());
@@ -286,16 +281,11 @@ class Form extends Component<HTMLFormElement> {
     let hasInvalidField : boolean = false;
 
     const name = this.nameField.getValue();
-    const description = this.descriptionField.getValue();
     const dueDate = new Date (this.dueDateField.getValue());
     const priority = Number(this.priorityField.getValue());
     const project = this.projectField.getValue();
 
     if (!this.todoController.validateName(name)) {
-      hasInvalidField = true;
-    }
-
-    if (!this.todoController.validateDescription(description)) {
       hasInvalidField = true;
     }
 
@@ -314,9 +304,7 @@ class Form extends Component<HTMLFormElement> {
     if (!hasInvalidField) { 
       // Validation passed
       const todo = new TodoModel(
-        false,
         name, 
-        description, 
         dueDate, 
         priority, 
         project
