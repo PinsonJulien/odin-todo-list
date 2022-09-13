@@ -1,11 +1,23 @@
 export default class Component<T extends (HTMLElement | SVGElement)> {
-  protected readonly root;
+  protected readonly _root: T;
 
   constructor(root: T ) {
-    this.root = root;
+    this._root = root;
   }
 
   public getRoot() {
-    return this.root;
+    return this._root;
+  }
+
+  public get root() {
+    return this._root;
+  }
+
+  public get classList(): DOMTokenList {
+    return this.root.classList;
+  }
+
+  public addClass(...classes: string[]) {
+    this.classList.add(...classes);
   }
 }

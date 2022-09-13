@@ -18,11 +18,11 @@ export default class Icon extends Component<HTMLSpanElement> {
 
     if (fontVariationSettings) {
       this.root.style.fontVariationSettings = `
-      'FILL' ${fontVariationSettings.fill || 0}, 
-      'wght' ${fontVariationSettings.weight || 100},
-      'GRAD' ${fontVariationSettings.grade || 0},
-      'opsz' ${fontVariationSettings.opticalSize || 20}
-    `;
+        'FILL' ${fontVariationSettings.fill || 0}, 
+        'wght' ${fontVariationSettings.weight || 100},
+        'GRAD' ${fontVariationSettings.grade || 0},
+        'opsz' ${fontVariationSettings.opticalSize || 20}
+      `;
     }
   }
 }

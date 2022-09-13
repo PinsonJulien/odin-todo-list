@@ -35,12 +35,13 @@ export default class Layout extends Component<HTMLDivElement> {
     const burgerIcon = new Burger();
     const minusIcon = new HorizontalRule();
     burgerBtn.appendChild(burgerIcon.getRoot());
-    
+
     burgerBtn.addEventListener('click', () => {
       burgerBtn.replaceChildren(
-        (burgerBtn.contains(burgerIcon.getRoot())
-        ? minusIcon.getRoot()
-        : burgerIcon.getRoot()
+        (
+          burgerBtn.contains(burgerIcon.getRoot())
+            ? minusIcon.getRoot()
+            : burgerIcon.getRoot()
         )
       )
       this.aside.classList.toggle('active');

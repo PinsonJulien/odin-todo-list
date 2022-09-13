@@ -22,19 +22,29 @@
   }
 
   > ul {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-rows: auto;
     gap: 1.2em;
 
     > li:first-child {
       margin: auto;
+      > div {
+        > .add-button {
+          font-size: 4em;
+        }
+      }
     }
 
     > .todo-list-item {
       > div {
+        background-color: $neutral-500;
+        color: $neutral-100;
+        font-size: 0.9em;
+        padding: 1em;
+        border-radius: 15px;
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: auto;
+        grid-template-rows: repeat(2fr, 5);
         grid-template-areas: 
           "name" 
           "project" 
@@ -44,16 +54,50 @@
         ;
         gap: 1em;
 
+        > p {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          flex: 1;
+          > * {
+            display: inline-block;
+          }
+        }
+
+        > p::before {
+          display: inline-block;
+          font-size: 0.8em;
+          color: $neutral-200;
+        }
+
+        > .name::before {
+          content: 'Name';
+        }
+
         > .name {
           grid-area: name;
-          color: red;
         }
+
+        > .due-date::before {
+          content: 'Due date';
+        }
+
         > .due-date {
           grid-area: due-date;
         }
+
+        > .priority::before {
+          content: 'Priority';
+        }
+
         > .priority {
           grid-area: priority;
         }
+
+        > .project::before {
+          content: 'Project';
+        }
+
         > .project {
           grid-area: project;
         }
@@ -61,16 +105,53 @@
         > .actions {
           grid-area: actions;
           display: flex;
-          width: 100%;
+          justify-content: space-around;
           
           button {
-            font-size: 1em;
+            font-size: 1.4em;
           }
         }
       } 
     }
   }
+
+  @media all and (min-width: $xs) and (max-width: ($sm - 250)) {
+    > ul {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  @media all and (min-width: ($sm - 250)) and (max-width: $md) {
+    > ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media all and (min-width: $md) and (max-width: $lg) {
+    > ul {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media all and (min-width: $lg) and (max-width: $xl) {
+    > ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media all and (min-width: $xl) and (max-width: $xxl) {
+    > ul {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media all and (min-width: $xxl) {
+    > ul {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
 }
+
 
 #error-404 {
   padding-top: 3em;

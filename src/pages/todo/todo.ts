@@ -4,6 +4,9 @@ import RangeInput from "../../components/forms/controls/inputs/range-input";
 import TextInput from "../../components/forms/controls/inputs/text-input";
 import Field from "../../components/forms/fields/field";
 import Label from "../../components/forms/labels/label";
+import Div from "../../components/html/div";
+import Paragraph from "../../components/html/paragraph";
+import Add from "../../components/icons/add";
 import Delete from "../../components/icons/delete";
 import Edit from "../../components/icons/edit";
 import Twofold from "../../components/twofold";
@@ -85,7 +88,8 @@ class NewTodo extends Twofold<HTMLLIElement> {
     );
     
     const btn = document.createElement('button');
-    btn.textContent = "Add new";
+    btn.classList.add('add-button');
+    btn.appendChild(new Add().getRoot());
     btn.addEventListener('click', (e) => {
       this.changeSide(true);
     })
@@ -129,14 +133,26 @@ class TodoListItem extends Twofold<HTMLLIElement> {
     this.root.classList.add('todo-list-item');
     
     // Html elements
-    this.name = document.createElement('p');
-    this.name.classList.add('name');
-    this.dueDate = document.createElement('p');
-    this.dueDate.classList.add('due-date');
-    this.priority = document.createElement('p');
-    this.priority.classList.add('priority');
-    this.project = document.createElement('p');
-    this.project.classList.add('project');
+    const generateDiv: (name: string, classs: string, p: Paragraph) => Div = (name, classs, p) => {
+      const div = new Div();
+      const title = new Paragraph(name);
+      p.addClass(classs);
+      div.root.append(title.root, p.root);
+
+      return div;
+    }
+
+    this.name = new Paragraph();
+    const nameDiv = generateDiv('name', 'name', this.name);
+
+    this.dueDate = new Paragraph();
+    const dueDateDiv = generateDiv('due date', 'due-date', this.dueDate);
+
+    this.priority = new Paragraph();
+    const priorityDiv = generateDiv('priority', 'priority', this.priority);
+
+    this.project = new Paragraph();
+    const projectDiv = generateDiv('project', 'project', this.project);
 
     const updateButton = document.createElement('button');
     updateButton.appendChild(new Edit().getRoot());
@@ -152,19 +168,19 @@ class TodoListItem extends Twofold<HTMLLIElement> {
       this.root.remove();
     });
 
-    const actionDiv = document.createElement('div');
-    actionDiv.classList.add('actions');
-    actionDiv.append(
+    const actionDiv = new Div();
+    actionDiv.addClass('actions');
+    actionDiv.root.append(
       updateButton,
       deleteButton
     );
 
     this.frontComponent.getRoot().append(
-      this.name,
-      this.dueDate,
-      this.priority,
-      this.project,
-      actionDiv,
+      nameDiv.root,
+      dueDateDiv.root,
+      priorityDiv.root,
+      projectDiv.root,
+      actionDiv.root,
     );
 
     this.setTodo(todo);
@@ -173,10 +189,10 @@ class TodoListItem extends Twofold<HTMLLIElement> {
   private setTodo (todo: TodoModel) : void {
     this.todo = todo;
     
-    this.name.textContent = this.todo.getName();
-    this.dueDate.textContent = this.todo.getDueDate().toDateString();
-    this.priority.textContent = this.todo.getPriority().toString();
-    this.project.textContent = this.todo.getProject();
+    this.name.setTextContent( this.todo.getName());
+    this.dueDate.setTextContent(this.todo.getDueDate().toDateString());
+    this.priority.setTextContent(this.todo.getPriority().toString());
+    this.project.setTextContent(this.todo.getProject());
 
     (this.backComponent as Form).setFields(todo);
   }

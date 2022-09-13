@@ -110,12 +110,19 @@
     > aside:not(.active) {
       display: none;
     }
+
+    > aside.active {
+      grid-column: span 2;
+    }
+
+    > aside.active + main {
+      display: none;
+    }
   }
 
   @media only screen and (min-width: $sm) {
     > header {
-
-      button:has(.burger) {
+      button {
         display: none !important;
       }
     }
