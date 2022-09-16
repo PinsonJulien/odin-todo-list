@@ -90,7 +90,23 @@
             > * {
               display: inline-block;
             }
-          }  
+          }
+        }
+
+        > div.valid { 
+          color: $green-300;
+          > input,
+          > select {
+            background-color: $green-200;
+          }
+        }
+
+        > div.invalid {
+          color: $red-300;
+          > input,
+          > select {
+            background-color: $red-200;
+          }
         }
 
         > .name {

@@ -302,6 +302,7 @@ class Form extends Component<HTMLFormElement> {
       )
     );
     this.priorityField.addClass('priority');
+    this.priorityField.setValue("0");
 
     this.projectField = new Field<TextInput> (
       new Label('Project', 'project'),
@@ -318,6 +319,7 @@ class Form extends Component<HTMLFormElement> {
     cancelButton.addEventListener('click', (e) => {
       e.preventDefault();
 
+      this.resetValidity();
       this.cancel();
     });
 
@@ -352,8 +354,15 @@ class Form extends Component<HTMLFormElement> {
   public emptyFields(): void {
     this.nameField.setValue(null);
     this.dueDateField.getControl().root.value = null;
-    this.priorityField.setValue(null);
+    this.priorityField.setValue("0");
     this.projectField.setValue(null);
+  }
+
+  public resetValidity(): void {
+    this.nameField.removeValidity();
+    this.dueDateField.removeValidity();
+    this.priorityField.removeValidity();
+    this.projectField.removeValidity();
   }
 
   protected validation () {
@@ -366,19 +375,25 @@ class Form extends Component<HTMLFormElement> {
 
     if (!this.todoController.validateName(name)) {
       hasInvalidField = true;
-    }
+      this.nameField.setValid(false);
+    } 
+    else this.nameField.setValid(true);
 
     if (!this.todoController.validateDueDate(dueDate)) {
       hasInvalidField = true;
+      this.dueDateField.setValid(false);
     }
+    else this.dueDateField.setValid(true);
 
     if (!this.todoController.validatePriority(priority)) {
       hasInvalidField = true;
-    }
+      this.priorityField.setValid(false);
+    } else this.priorityField.setValid(true);
 
     if (!this.todoController.validateProject(project)) {
       hasInvalidField = true;
-    }
+      this.projectField.setValid(false);
+    } else this.projectField.setValid(true);
 
     if (!hasInvalidField) { 
       // Validation passed
@@ -390,6 +405,7 @@ class Form extends Component<HTMLFormElement> {
       );
 
       this.submit(todo);
+      this.resetValidity();
     }
   }
 }

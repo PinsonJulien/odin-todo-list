@@ -39,6 +39,11 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
   }
 
   public setValid(valid: boolean) : void {
-    if (valid) return;
+    this.root.classList.add((valid) ? 'valid' : 'invalid');
+    this.root.classList.remove((valid) ? 'invalid' : 'valid');
+  }
+
+  public removeValidity() : void {
+    this.root.classList.remove('valid', 'invalid');
   }
 }

@@ -118,20 +118,27 @@ export class Todo {
   }
 
   public validateName(name: TodoModel['name']): boolean {
+    if (!name) return false;
+
     return true;
   }
 
   public validateDueDate(dueDate: TodoModel['dueDate']): boolean {
+    if (!dueDate) return false;
     if (isNaN(dueDate.getTime())) return false;
 
     return true;
   }
 
   public validatePriority(priority: TodoModel['priority']): boolean {
+    if (priority === null) return false;
+
     return true;
   }
 
   public validateProject(project: TodoModel['project']): boolean {
+    if (!project) return false;
+
     return true;
   }
 
