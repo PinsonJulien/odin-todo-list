@@ -19,7 +19,6 @@ Currently none
 Currently none
 
 ## To do
-- Overall design
-- Forms must have a select field rather than input range.
 - New todo form must be reset after successful insertion / quitting.
 - Maybe separate the new form buttom from the list, but add it next to the title, with a modal ?
+- Validation

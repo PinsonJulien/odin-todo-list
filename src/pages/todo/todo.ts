@@ -2,6 +2,7 @@ import Component from "../../components/component";
 import DateInput from "../../components/forms/controls/inputs/date-input";
 import RangeInput from "../../components/forms/controls/inputs/range-input";
 import TextInput from "../../components/forms/controls/inputs/text-input";
+import Select from "../../components/forms/controls/selects/select";
 import Field from "../../components/forms/fields/field";
 import Label from "../../components/forms/labels/label";
 import Div from "../../components/html/div";
@@ -15,6 +16,29 @@ import Twofold from "../../components/twofold";
 import { Todo as TodoController } from "../../controllers/todo";
 import { Todo as TodoModel } from "../../models/todo";
 import Page from "../page";
+
+export const todoPriorities : {value: number, name: string}[] = [
+  {
+    value: 0,
+    name: 'None'
+  },
+  {
+    value: 1,
+    name: 'For this month'
+  },
+  {
+    value: 2,
+    name: 'For this week'
+  },
+  {
+    value: 3,
+    name: 'For tomorrow'
+  },
+  {
+    value: 4,
+    name: 'For today'
+  }
+];
 
 export abstract class Todo extends Page {
   protected readonly todoController: TodoController;
@@ -191,11 +215,18 @@ class TodoListItem extends Twofold<HTMLLIElement> {
 
   private setTodo (todo: TodoModel) : void {
     this.todo = todo;
-    
-    this.name.setTextContent( this.todo.getName());
-    this.dueDate.setTextContent(this.todo.getDueDate().toLocaleDateString());
-    this.priority.setTextContent(this.todo.getPriority().toString());
-    this.project.setTextContent(this.todo.getProject());
+
+    const name = this.todo.getName();
+    this.name.setTextContent(name);
+
+    const dueDate = this.todo.getDueDate().toLocaleDateString();
+    this.dueDate.setTextContent(dueDate);
+
+    const priority = todoPriorities.find((priority) => priority.value === this.todo.getPriority());
+    this.priority.setTextContent(priority ? priority.name : "");
+
+    const project = this.todo.getProject();
+    this.project.setTextContent(project);
 
     (this.backComponent as Form).setFields(todo);
   }
@@ -219,7 +250,7 @@ class Form extends Component<HTMLFormElement> {
 
   protected readonly nameField: Field<TextInput>;
   protected readonly dueDateField: Field<DateInput>;
-  protected readonly priorityField: Field<RangeInput>;
+  protected readonly priorityField: Field<Select>;
   protected readonly projectField: Field<TextInput>;
 
   constructor(
@@ -248,10 +279,17 @@ class Form extends Component<HTMLFormElement> {
     ); 
     this.dueDateField.addClass('due-date');
 
-    this.priorityField = new Field<RangeInput> (
+    this.priorityField = new Field<Select> (
       new Label('Priority', 'priority'),
-      new RangeInput('priority', 'priority', 0, 5, 1)
-    ); 
+      new Select(
+        todoPriorities.map((property) => { 
+          return {
+            value: property.value.toString(), 
+            text: property.name 
+          }
+        })
+      )
+    );
     this.priorityField.addClass('priority');
 
     this.projectField = new Field<TextInput> (
@@ -295,7 +333,7 @@ class Form extends Component<HTMLFormElement> {
 
   public setFields (todo: TodoModel) : void {
     this.nameField.setValue(todo.getName());
-    this.dueDateField.getControl().getRoot().valueAsDate = todo.getDueDate();
+    this.dueDateField.getControl().getRoot().valueAsDate = todo.getDueDate();    
     this.priorityField.setValue(todo.getPriority().toString());
     this.projectField.setValue(todo.getProject());
   }
