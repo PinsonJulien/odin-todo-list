@@ -7,7 +7,9 @@ import Label from "../../components/forms/labels/label";
 import Div from "../../components/html/div";
 import Paragraph from "../../components/html/paragraph";
 import Add from "../../components/icons/add";
+import Close from "../../components/icons/close";
 import Delete from "../../components/icons/delete";
+import Done from "../../components/icons/done";
 import Edit from "../../components/icons/edit";
 import Twofold from "../../components/twofold";
 import { Todo as TodoController } from "../../controllers/todo";
@@ -130,14 +132,15 @@ class TodoListItem extends Twofold<HTMLLIElement> {
     );
 
     this.todoController = todoController;
-    this.root.classList.add('todo-list-item');
+    this.frontComponent.classList.add('todo-list-item');
     
     // Html elements
     const generateDiv: (name: string, classs: string, p: Paragraph) => Div = (name, classs, p) => {
       const div = new Div();
       const title = new Paragraph(name);
-      p.addClass(classs);
+      
       div.root.append(title.root, p.root);
+      div.addClass(classs);
 
       return div;
     }
@@ -190,7 +193,7 @@ class TodoListItem extends Twofold<HTMLLIElement> {
     this.todo = todo;
     
     this.name.setTextContent( this.todo.getName());
-    this.dueDate.setTextContent(this.todo.getDueDate().toDateString());
+    this.dueDate.setTextContent(this.todo.getDueDate().toLocaleDateString());
     this.priority.setTextContent(this.todo.getPriority().toString());
     this.project.setTextContent(this.todo.getProject());
 
@@ -234,30 +237,34 @@ class Form extends Component<HTMLFormElement> {
     this.root.setAttribute('method', 'post');
 
     this.nameField = new Field<TextInput> (
-      new Label('Name:', 'name'),
+      new Label('Name', 'name'),
       new TextInput('name', 'name')
     );
+    this.nameField.addClass('name');
 
     this.dueDateField = new Field<DateInput> (
-      new Label('Due date:', 'dueDate'),
+      new Label('Due date', 'dueDate'),
       new DateInput('dueDate', 'dueDate')
     ); 
+    this.dueDateField.addClass('due-date');
 
     this.priorityField = new Field<RangeInput> (
-      new Label('Priority:', 'priority'),
+      new Label('Priority', 'priority'),
       new RangeInput('priority', 'priority', 0, 5, 1)
     ); 
+    this.priorityField.addClass('priority');
 
     this.projectField = new Field<TextInput> (
-      new Label('Project:', 'project'),
+      new Label('Project', 'project'),
       new TextInput('project', 'project')
-    ); 
+    );
+    this.projectField.addClass('project');
 
     const submitButton = document.createElement('button');
-    submitButton.textContent = "Submit";
+    submitButton.appendChild(new Done().root);
 
     const cancelButton = document.createElement('button');
-    cancelButton.textContent = "Cancel";
+    cancelButton.appendChild(new Close().root);
     cancelButton.type = "button";
     cancelButton.addEventListener('click', (e) => {
       e.preventDefault();

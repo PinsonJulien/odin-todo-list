@@ -7,7 +7,7 @@
     font-size: 1.8em;
   }
 
-  .todo-form {
+  /*.todo-form {
     margin: 0 auto 0 auto;
     width: 50%;
     display: flex;
@@ -19,29 +19,46 @@
       flex-direction: column;
       gap: 0.5em;
     }
-  }
+  }*/
 
   > ul {
+    width: 100%;
     display: grid;
     grid-template-rows: auto;
     gap: 1.2em;
 
+    > li {
+      
+    }
+
     > li:first-child {
-      margin: auto;
-      > div {
+      display: flex;
+      width: 100%;
+
+      > div:first-child {
+        margin : auto;
+        
         > .add-button {
           font-size: 4em;
         }
       }
     }
 
-    > .todo-list-item {
-      > div {
-        background-color: $neutral-500;
-        color: $neutral-100;
+    > li:not(:has(.add-button)){
+      background-color: $neutral-500;
+      color: $neutral-100;
+      height: fit-content;
+      width: 100%;
+      border-radius: 15px;
+    }
+
+    > li {
+      > .todo-list-item,
+      > .todo-form {
+        height: 100%;
         font-size: 0.9em;
         padding: 1em;
-        border-radius: 15px;
+        
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: repeat(2fr, 5);
@@ -53,49 +70,54 @@
           "actions"
         ;
         gap: 1em;
+        
+        > div {
+          width: 100%;
 
-        > p {
-          display: flex;
-          flex-direction: column;
-          gap: 3px;
-          flex: 1;
           > * {
-            display: inline-block;
+            width: 100%;
           }
-        }
 
-        > p::before {
-          display: inline-block;
-          font-size: 0.8em;
-          color: $neutral-200;
-        }
+          > p:first-child,
+          > label {
+            font-size: 0.8em;
+          }
 
-        > .name::before {
-          content: 'Name';
+          > p:last-child {
+            font-size: 1.2em;
+          }
+
+          > *:last-child {
+            height: 30px;
+            max-height: 30px !important;
+            width: 100% !important;
+            border: none;
+            margin: 0;
+            padding: 0;
+          }
+
+          > p,
+          > label {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            > * {
+              display: inline-block;
+            }
+          }  
         }
 
         > .name {
           grid-area: name;
         }
 
-        > .due-date::before {
-          content: 'Due date';
-        }
-
         > .due-date {
           grid-area: due-date;
         }
 
-        > .priority::before {
-          content: 'Priority';
-        }
-
         > .priority {
           grid-area: priority;
-        }
-
-        > .project::before {
-          content: 'Project';
         }
 
         > .project {
