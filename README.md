@@ -16,9 +16,8 @@ Github workflow builds the project to the gh-pages branch, which serves as the g
 Currently none
 
 ## Possible improvements
-Currently none
+- Maybe separate the new form buttom from the list, but add it next to the title, with a modal ?
 
 ## To do
-- New todo form must be reset after successful insertion / quitting.
-- Maybe separate the new form buttom from the list, but add it next to the title, with a modal ?
 - Validation
+- Make cleaner code, more commented.

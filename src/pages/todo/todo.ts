@@ -1,6 +1,5 @@
 import Component from "../../components/component";
 import DateInput from "../../components/forms/controls/inputs/date-input";
-import RangeInput from "../../components/forms/controls/inputs/range-input";
 import TextInput from "../../components/forms/controls/inputs/text-input";
 import Select from "../../components/forms/controls/selects/select";
 import Field from "../../components/forms/fields/field";
@@ -84,6 +83,8 @@ export abstract class Todo extends Page {
 }
 
 class NewTodo extends Twofold<HTMLLIElement> {
+  private readonly form: Form;
+
   constructor(
     todoController: TodoController,
     page: Todo,
@@ -103,15 +104,19 @@ class NewTodo extends Twofold<HTMLLIElement> {
             if (!operationSucceeded) return;
 
             page.refresh();
+            this.form.emptyFields();
           }
         ),
         (
           () : void => {
             this.changeSide(false);
+            this.form.emptyFields();
           }
         )
       )
     );
+
+    this.form = this.backComponent as Form;
     
     const btn = document.createElement('button');
     btn.classList.add('add-button');
@@ -132,6 +137,7 @@ class TodoListItem extends Twofold<HTMLLIElement> {
   protected readonly project;
 
   protected todo: TodoModel;
+  private readonly form: Form;
 
   constructor(
     todo: TodoModel,
@@ -145,15 +151,20 @@ class TodoListItem extends Twofold<HTMLLIElement> {
         (
           (todo: TodoModel) : void => {
             this.update(todo);
+            this.form.setFields(this.todo);
           }
         ),
         (
           () : void => {
+            // Flip to the card and reset the form.
             this.changeSide(false);
+            this.form.setFields(this.todo);
           }
         )
       )
     );
+
+    this.form = this.backComponent as Form;
 
     this.todoController = todoController;
     this.frontComponent.classList.add('todo-list-item');
@@ -336,6 +347,13 @@ class Form extends Component<HTMLFormElement> {
     this.dueDateField.getControl().getRoot().valueAsDate = todo.getDueDate();    
     this.priorityField.setValue(todo.getPriority().toString());
     this.projectField.setValue(todo.getProject());
+  }
+
+  public emptyFields(): void {
+    this.nameField.setValue(null);
+    this.dueDateField.getControl().root.value = null;
+    this.priorityField.setValue(null);
+    this.projectField.setValue(null);
   }
 
   protected validation () {
