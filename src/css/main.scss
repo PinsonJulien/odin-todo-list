@@ -37,3 +37,12 @@ button:has(.material-symbols-rounded) {
   'GRAD' 0,
   'opsz' 48;
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background-color: $neutral-400;
+}

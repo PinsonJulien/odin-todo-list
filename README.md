@@ -20,4 +20,3 @@ Currently none
 
 ## To do
 - Make cleaner code, more commented.
-- Styling the scrollbar
