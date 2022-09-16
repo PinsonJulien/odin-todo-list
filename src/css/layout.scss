@@ -46,6 +46,8 @@
     font-size: 1em;
     font-weight: 500;
     min-width: 150px;
+    min-height: 0;
+    overflow-y: auto;
 
     > nav {
       display: flex;
@@ -91,6 +93,12 @@
   >main {
     grid-area: main;
     padding: 2em;
+    min-height: 0;
+
+    > #router {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   >footer {

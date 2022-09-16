@@ -1,4 +1,5 @@
 .todo-page {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -7,29 +8,12 @@
     font-size: 1.8em;
   }
 
-  /*.todo-form {
-    margin: 0 auto 0 auto;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-
-    > .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5em;
-    }
-  }*/
-
   > ul {
+    overflow-y: auto;
     width: 100%;
     display: grid;
     grid-template-rows: auto;
     gap: 1.2em;
-
-    > li {
-      
-    }
 
     > li:first-child {
       display: flex;
