@@ -1,27 +1,39 @@
 import { byteSize } from "../../utils/byte";
 
 export default class LocalStorage<T> {
-  private readonly factory: (obj: T) => T;
-  private readonly key: string;
-  private readonly sortingRule : (a: T, b: T) => number;
+  private readonly _factory: (obj: T) => T;
+  private readonly _key: string;
+  private readonly _sortingRule : (a: T, b: T) => number;
   
-  private readonly values: T[];
+  private readonly _values: T[];
 
   constructor(
-    factory: LocalStorage<T>['factory'],
-    key: LocalStorage<T>['key'],
-    sortingRule: LocalStorage<T>['sortingRule']
+    factory: LocalStorage<T>['_factory'],
+    key: LocalStorage<T>['_key'],
+    sortingRule: LocalStorage<T>['_sortingRule']
   ) {
-    this.factory = factory;
-    this.key = key;
-    this.sortingRule = sortingRule;
+    this._factory = factory;
+    this._key = key;
+    this._sortingRule = sortingRule;
 
     // get all local data
-    this.values = this.read();
+    this._values = this.read();
   }
 
-  public getValues(): T[] {
-    return this.values;
+  public get values(): LocalStorage<T>['_values'] {
+    return this._values;
+  }
+
+  protected get factory(): LocalStorage<T>['_factory'] {
+    return this._factory;
+  }
+
+  protected get key(): LocalStorage<T>['_key'] {
+    return this._key;
+  }
+
+  protected get sortingRule(): LocalStorage<T>['_sortingRule'] {
+    return this._sortingRule;
   }
 
   private find(value: T) : number {

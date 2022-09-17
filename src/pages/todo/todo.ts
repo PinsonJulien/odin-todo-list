@@ -227,17 +227,17 @@ class TodoListItem extends Twofold<HTMLLIElement> {
   private setTodo (todo: TodoModel) : void {
     this.todo = todo;
 
-    const name = this.todo.getName();
-    this.name.setTextContent(name);
+    const name = this.todo.name;
+    this.name.textContent = name;
 
-    const dueDate = this.todo.getDueDate().toLocaleDateString();
-    this.dueDate.setTextContent(dueDate);
+    const dueDate = this.todo.dueDate.toLocaleDateString();
+    this.dueDate.textContent = dueDate;
 
-    const priority = todoPriorities.find((priority) => priority.value === this.todo.getPriority());
-    this.priority.setTextContent(priority ? priority.name : "");
+    const priority = todoPriorities.find((priority) => priority.value === this.todo.priority);
+    this.priority.textContent = (priority) ? priority.name : "";
 
-    const project = this.todo.getProject();
-    this.project.setTextContent(project);
+    const project = this.todo.project;
+    this.project.textContent = project;
 
     (this.backComponent as Form).setFields(todo);
   }
@@ -345,15 +345,15 @@ class Form extends Component<HTMLFormElement> {
   }
 
   public setFields (todo: TodoModel) : void {
-    this.nameField.setValue(todo.getName());
-    this.dueDateField.getControl().root.valueAsDate = todo.getDueDate();    
-    this.priorityField.setValue(todo.getPriority().toString());
-    this.projectField.setValue(todo.getProject());
+    this.nameField.setValue(todo.name);
+    this.dueDateField.control.root.valueAsDate = todo.dueDate;    
+    this.priorityField.setValue(todo.priority.toString());
+    this.projectField.setValue(todo.project);
   }
 
   public emptyFields(): void {
     this.nameField.setValue(null);
-    this.dueDateField.getControl().root.value = null;
+    this.dueDateField.control.root.value = null;
     this.priorityField.setValue("0");
     this.projectField.setValue(null);
   }

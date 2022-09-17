@@ -3,18 +3,18 @@ import { Controls } from "../controls/controls";
 import Label from "../labels/label";
 
 export default class Field<T extends Controls> extends Component<HTMLDivElement> {
-  protected readonly label: Label;
-  protected readonly control: T;
+  protected readonly _label: Label;
+  protected readonly _control: T;
 
   constructor(
-    label: Field<T>['label'],
-    control: Field<T>['control']
+    label: Field<T>['_label'],
+    control: Field<T>['_control']
   ) {
     super(document.createElement('div'));
     this.addClass('form-field');
 
-    this.label = label;
-    this.control = control;
+    this._label = label;
+    this._control = control;
 
     this.root.append(
       this.label.root,
@@ -22,12 +22,12 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
     )
   }
 
-  public getLabel(): Field<T>['label'] {
-    return this.label;
+  public get label(): Field<T>['_label'] {
+    return this._label;
   }
 
-  public getControl(): Field<T>['control'] {
-    return this.control;
+  public get control(): Field<T>['_control'] {
+    return this._control;
   }
 
   public getValue(): string {
@@ -40,10 +40,10 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
 
   public setValid(valid: boolean) : void {
     this.addClass((valid) ? 'valid' : 'invalid');
-    this.removeClass((valid) ? 'invalid' : 'valid')
+    this.removeClass((valid) ? 'invalid' : 'valid');
   }
 
   public removeValidity() : void {
-    this.removeClass('valid', 'invalid')
+    this.removeClass('valid', 'invalid');
   }
 }

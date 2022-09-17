@@ -1,15 +1,24 @@
 import Component from "../../components/component";
 import Error404 from "../../pages/404";
+import HashPath from "../hashPath";
 import Route from "./route";
 import RouterLink from "./router-link";
 
 export default class Router extends Component<HTMLDivElement> {
-  private routerLinks: RouterLink[] = [];
+  private _routerLinks: RouterLink[] = [];
   private readonly error404 = new Error404();
 
   constructor() {
     super(document.createElement('div'));
     this.root.id = "router";
+  }
+
+  public get routerLinks() {
+    return this._routerLinks;
+  }
+
+  protected set routerLinks(routerLinks: RouterLink[]) {
+    this._routerLinks = routerLinks;
   }
 
   public insert(...routes: Route[]): RouterLink[] {
@@ -72,18 +81,6 @@ export default class Router extends Component<HTMLDivElement> {
     page.refresh();
 
     // change hash
-    this.changeHashPath(path);
-  }
-
-  private changeHashPath(path: Route['path']) {
-    window.location.hash = path;
-  }
-
-  public getHashPath(): Route['path'] {
-    return window.location.hash.replace('#', "");
-  }
-
-  public getRouterLinks() {
-    return this.routerLinks;
+    HashPath.change(path);
   }
 }

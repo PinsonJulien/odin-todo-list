@@ -5,6 +5,7 @@ import Layout from './layout/layout';
 import { All } from './pages/todo/all';
 import { Today } from './pages/todo/today';
 import { Week } from './pages/todo/week';
+import HashPath from './utils/hashPath';
 import Router from './utils/router/router';
 
 // Init the structure
@@ -12,10 +13,10 @@ const layout = new Layout();
 document.body.appendChild(layout.root);
 
 const router = new Router();
-layout.getMain().appendChild(router.root);
+layout.main.appendChild(router.root);
 
 const todoController = new TodoController(
-  layout.getMenuProjects(),
+  layout.menuProjects,
   router
 );
 
@@ -38,9 +39,9 @@ const menuLinks = router.insert(
   }
 );
 
-layout.getMenu().insert(...menuLinks);
+layout.menu.insert(...menuLinks);
 
 // On start look if the url contains a hash path, or default to '/'.
-const hash = router.getHashPath();
+const hash = HashPath.get();
 if (hash) router.switchRouteByPath(hash);
 else router.switchRouteByPath('/');

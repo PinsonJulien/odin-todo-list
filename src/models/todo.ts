@@ -1,50 +1,50 @@
 export class Todo {
-  private name: string;
-  private dueDate: Date;
-  private priority: number;
-  private project: string;
+  private _name: string;
+  private _dueDate: Date;
+  private _priority: number;
+  private _project: string;
 
   constructor (
-    name: Todo['name'],
-    dueDate: Todo['dueDate'],
-    priority: Todo['priority'],
-    project: Todo['project']
+    name: Todo['_name'],
+    dueDate: Todo['_dueDate'],
+    priority: Todo['_priority'],
+    project: Todo['_project']
   ) {
-    this.setName(name);
-    this.setDueDate(dueDate);
-    this.setPriority(priority);
-    this.setProject(project);
-  }
-
-  public setName(name: Todo['name']): void {
     this.name = name;
-  }
-
-  public getName(): Todo['name'] {
-    return this.name;
-  }
-
-  public setDueDate(dueDate: Todo['dueDate']) : void {
     this.dueDate = dueDate;
-  }
-
-  public getDueDate(): Todo['dueDate'] {
-    return this.dueDate;
-  }
-
-  public setPriority (priority: Todo['priority']): void {
     this.priority = priority;
-  }
-
-  public getPriority(): Todo['priority'] {
-    return this.priority;
-  }
-
-  public setProject(project: Todo['project']): void {
     this.project = project;
-  } 
+  }
 
-  public getProject(): Todo['project'] {
-    return this.project;
+  public get name(): Todo['_name'] {
+    return this._name;
+  }
+
+  public set name(name: Todo['_name']) {
+    this._name = name;
+  }
+
+  public get dueDate(): Todo['_dueDate'] {
+    return this._dueDate;
+  }
+
+  public set dueDate(dueDate: Todo['_dueDate']) {
+    this._dueDate = dueDate;
+  }
+
+  public get priority(): Todo['_priority'] {
+    return this._priority;
+  }
+
+  public set priority(priority: Todo['_priority']) {
+    this._priority = priority;
+  }
+
+  public get project(): Todo['_project'] {
+    return this._project;
+  }
+
+  public set project(project: Todo['_project']) {
+    this._project = project;
   }
 }

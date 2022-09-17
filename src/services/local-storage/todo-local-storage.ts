@@ -7,15 +7,15 @@ export default class TodoLocalStorage extends LocalStorage<Todo> {
     super(
       (obj: Todo): Todo => {
         return new Todo(
-          obj['name'],
-          new Date(obj['dueDate']),
-          obj['priority'],
-          obj['project']
+          obj['_name'],
+          new Date(obj['_dueDate']),
+          obj['_priority'],
+          obj['_project']
         );
       },
       'todo',
       (a, b) => {
-        return a.getDueDate().getTime() - b.getDueDate().getTime();
+        return a.dueDate.getTime() - b.dueDate.getTime();
       }
     );
   }

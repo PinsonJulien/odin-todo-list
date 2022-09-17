@@ -14,6 +14,14 @@ export default class Select extends Component<HTMLSelectElement> implements Cont
     if (optionProps) this.addOption(...optionProps);
   }
 
+  public get value(): string {
+    return this.root.value;
+  }
+
+  public set value(value: string) {
+    this.root.value = value;
+  }
+
   public getValue(): string {
     return this.root.value;
   }

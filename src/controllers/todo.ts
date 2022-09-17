@@ -38,16 +38,16 @@ export class Todo {
   }
 
   public fetchAll(): TodoModel[] {
-    return this.todoLocalStorage.getValues();
+    return this.todoLocalStorage.values;
   }
 
   public fetchByProject(project: TodoModel['project']): TodoModel[]  {
-    return this.fetchAll().filter((todo) => todo.getProject() === project);
+    return this.fetchAll().filter((todo) => todo.project === project);
   }
 
   public fetchByDate(d: Date): TodoModel[]  {
     return this.fetchAll().filter((todo) => { 
-      const todoDate = todo.getDueDate();
+      const todoDate = todo.dueDate;
       return (
         todoDate.getDate() === d.getDate() &&
         todoDate.getMonth() === d.getMonth() &&
@@ -58,7 +58,7 @@ export class Todo {
 
   public fetchByDateRange(d1: Date, d2: Date): TodoModel[]  {
     return this.fetchAll().filter((todo) => {
-      const dateTime = todo.getDueDate().getTime();
+      const dateTime = todo.dueDate.getTime();
       return (
         dateTime >= d1.getTime() 
         && 
@@ -85,7 +85,7 @@ export class Todo {
     this.todoLocalStorage.update(target, updated);
 
     // The project has changed, the UI must be updated.
-    if (target.getProject() !== updated.getProject()) {
+    if (target.project !== updated.project) {
       const projects = this.getProjects();
 
       // Try to delete if it doesn't exist anymore
@@ -110,10 +110,10 @@ export class Todo {
   // Validations
   public validate(todo: TodoModel): boolean {
     return ( 
-      this.validateName(todo.getName()) ||
-      this.validateDueDate(todo.getDueDate()) ||
-      this.validatePriority(todo.getPriority()) ||
-      this.validateProject(todo.getProject())
+      this.validateName(todo.name) ||
+      this.validateDueDate(todo.dueDate) ||
+      this.validatePriority(todo.priority) ||
+      this.validateProject(todo.project)
     );
   }
 
@@ -146,7 +146,7 @@ export class Todo {
     const projects: TodoModel['project'][] = [];
     
     this.fetchAll().forEach((todo) => {
-      const project = todo.getProject();
+      const project = todo.project;
       if (project !=="" && !projects.includes(project)) projects.push(project);
     });
 
@@ -167,7 +167,7 @@ export class Todo {
   }
 
   private routerUpdate(todo: TodoModel, action: "create" | "delete") {
-    const project = todo.getProject();
+    const project = todo.project;
 
     switch(action) {
       case "create":
