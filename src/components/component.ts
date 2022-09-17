@@ -9,6 +9,14 @@ export default class Component<T extends (HTMLElement | SVGElement)> {
     return this._root;
   }
 
+  public get id() {
+    return this.root.id;
+  }
+
+  public set id(id: string) {
+    this.root.id = id;
+  }
+
   public get classList(): DOMTokenList {
     return this.root.classList;
   }

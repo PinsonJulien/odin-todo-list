@@ -2,9 +2,11 @@ import Input from "./input";
 
 export default class DateInput extends Input {
   constructor(
-    id: Input['id'],
-    name: Input['name']
+    name: Input['_name'],
+    id?: Input['id'], 
   ) {
-    super('date', id, name);
+    super('date', name);
+
+    if (id) this.id = id;
   }
 }

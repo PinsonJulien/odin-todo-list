@@ -2,9 +2,11 @@ import Input from "./input";
 
 export default class TextInput extends Input {
   constructor(
-    id: Input['id'],
-    name: Input['name']
+    name: Input['name'],
+    id?: Input['id']
   ) {
-    super('text', id, name);
+    super('text', name);
+
+    if(id) this.id = id;
   }
 }

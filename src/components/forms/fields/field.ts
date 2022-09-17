@@ -1,8 +1,8 @@
 import Component from "../../component";
-import { Controls } from "../controls/controls";
+import Control from "../controls/control";
 import Label from "../labels/label";
 
-export default class Field<T extends Controls> extends Component<HTMLDivElement> {
+export default class Field<T extends Control<any>> extends Component<HTMLDivElement> {
   protected readonly _label: Label;
   protected readonly _control: T;
 
@@ -28,14 +28,6 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
 
   public get control(): Field<T>['_control'] {
     return this._control;
-  }
-
-  public getValue(): string {
-    return this.control.getValue();
-  }
-
-  public setValue(value: string): void {
-    this.control.setValue(value);
   }
 
   public setValid(valid: boolean) : void {

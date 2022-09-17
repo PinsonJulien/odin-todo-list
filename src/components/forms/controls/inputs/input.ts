@@ -1,32 +1,38 @@
-import Component from "../../../component";
 import Control from "../control";
 
-export default abstract class Input extends Component<HTMLInputElement> implements Control {
-  protected type: string;
-  protected id: string;
-  protected name: string;
+export default abstract class Input extends Control<HTMLInputElement> {
+  private _type: string;
 
   constructor(
-    type: Input['type'],
-    id: Input['id'],
-    name: Input['name']
+    type: Input['_type'],
+    name: Input['_name'],    
   ) {
-    super(document.createElement('input'));
-
+    super(document.createElement('input'), name);
     this.type = type;
-    this.id = id;
-    this.name = name;
+  }
 
+  public get type(): Input['_type'] {
+    return this._type;
+  }
+
+  public set type(type: Input['_type']) {
+    this._type = type;
     this.root.type = type;
-    this.root.id = id;
-    this.root.name = name;
   }
 
-  public getValue(): string {
-    return this.root.value;
+  public get valueAsDate(): Date {
+    return this.root.valueAsDate;
   }
 
-  public setValue(value: string) : void {
-    this.root.value = value;
+  public set valueAsDate(value: Date) {
+    this.root.valueAsDate = value;
+  }
+
+  public get valueAsNumber(): number {
+    return this.root.valueAsNumber;
+  }
+
+  public set valueAsNumber(value: number) {
+    this.root.valueAsNumber = value;
   }
 }

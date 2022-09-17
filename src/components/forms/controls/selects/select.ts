@@ -1,41 +1,31 @@
-import Component from "../../../component";
 import Control from "../control";
 import Option, { OptionProps } from "./option";
 
-export default class Select extends Component<HTMLSelectElement> implements Control {
-
-  private options: Option[] = [];
+export default class Select extends Control<HTMLSelectElement> {
+  private _options: Option[] = [];
 
   constructor(
-    optionProps?: OptionProps[]
+    optionProps: OptionProps[],
+    name: Select['_name']
   ) {
-    super(document.createElement('select'));
+    super(document.createElement('select'), name);
 
-    if (optionProps) this.addOption(...optionProps);
+    this.options = optionProps;
   }
 
-  public get value(): string {
-    return this.root.value;
+  public get options(): Select['_options'] {
+    return this._options;
   }
 
-  public set value(value: string) {
-    this.root.value = value;
-  }
+  public set options (optionProps: OptionProps[]) {
+    const newOptions: Option[] = [];
 
-  public getValue(): string {
-    return this.root.value;
-  }
-
-  public setValue(value: string): void {
-    this.root.value = value;
-  }
-
-  public addOption(...options: OptionProps[]) {
-    options.forEach((option) => {
-      const optionComponent = new Option(option);
-      this.options.push(optionComponent);
-
-      this.root.appendChild(optionComponent.root);
+    optionProps.forEach((prop) => {
+      const optionComponent = new Option(prop);
+      newOptions.push(optionComponent);
     });
+
+    this._options = newOptions;
+    this.root.replaceChildren(...this._options.map((option) => option.root));
   }
 }

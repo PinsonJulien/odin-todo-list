@@ -298,11 +298,12 @@ class Form extends Component<HTMLFormElement> {
             value: property.value.toString(), 
             text: property.name 
           }
-        })
+        }),
+        "priority"
       )
     );
     this.priorityField.addClass('priority');
-    this.priorityField.setValue("0");
+    this.priorityField.control.value = "0";
 
     this.projectField = new Field<TextInput> (
       new Label('Project', 'project'),
@@ -345,17 +346,17 @@ class Form extends Component<HTMLFormElement> {
   }
 
   public setFields (todo: TodoModel) : void {
-    this.nameField.setValue(todo.name);
-    this.dueDateField.control.root.valueAsDate = todo.dueDate;    
-    this.priorityField.setValue(todo.priority.toString());
-    this.projectField.setValue(todo.project);
+    this.nameField.control.value = todo.name;
+    this.dueDateField.control.valueAsDate = todo.dueDate;
+    this.priorityField.control.value = todo.priority.toString();
+    this.projectField.control.value = todo.project;
   }
 
   public emptyFields(): void {
-    this.nameField.setValue(null);
-    this.dueDateField.control.root.value = null;
-    this.priorityField.setValue("0");
-    this.projectField.setValue(null);
+    this.nameField.control.value = null;
+    this.dueDateField.control.value = null;
+    this.priorityField.control.value = "0";
+    this.projectField.control.value = null;
   }
 
   public resetValidity(): void {
@@ -368,10 +369,10 @@ class Form extends Component<HTMLFormElement> {
   protected validation () {
     let hasInvalidField : boolean = false;
 
-    const name = this.nameField.getValue();
-    const dueDate = new Date (this.dueDateField.getValue());
-    const priority = Number(this.priorityField.getValue());
-    const project = this.projectField.getValue();
+    const name = this.nameField.control.value;
+    const dueDate = this.dueDateField.control.valueAsDate;
+    const priority = Number(this.priorityField.control.value);
+    const project = this.projectField.control.value;
 
     if (!this.todoController.validateName(name)) {
       hasInvalidField = true;
