@@ -5,10 +5,6 @@ export default class Component<T extends (HTMLElement | SVGElement)> {
     this._root = root;
   }
 
-  public getRoot() {
-    return this._root;
-  }
-
   public get root() {
     return this._root;
   }
@@ -19,5 +15,9 @@ export default class Component<T extends (HTMLElement | SVGElement)> {
 
   public addClass(...classes: string[]) {
     this.classList.add(...classes);
+  }
+
+  public removeClass(...classes: string[]) {
+    this.classList.remove(...classes);
   }
 }

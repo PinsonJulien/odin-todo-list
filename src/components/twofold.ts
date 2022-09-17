@@ -26,8 +26,8 @@ export default abstract class Twofold<T extends HTMLElement> extends Component<T
 
     this.root.replaceChildren(
       (!this.currentSide)
-        ? this.frontComponent.getRoot()
-        : this.backComponent.getRoot()
+        ? this.frontComponent.root
+        : this.backComponent.root
     );
   }
 }

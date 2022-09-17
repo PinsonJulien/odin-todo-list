@@ -19,5 +19,4 @@ Currently none
 - Maybe separate the new form buttom from the list, but add it next to the title, with a modal ?
 
 ## To do
-- Fix todo field order, because tab doesn't work as intended.
 - Make cleaner code, more commented.

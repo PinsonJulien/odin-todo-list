@@ -28,9 +28,8 @@ export default class RouterLink extends Component<HTMLAnchorElement> {
 
   setActive(active: boolean) : void {
     const activeClass = "active";
-    const classList = this.root.classList;
-
-    if(active) classList.add(activeClass);
-    else classList.remove(activeClass);
+    
+    if (active) this.addClass(activeClass);
+    else this.removeClass(activeClass);
   }
 }

@@ -13,7 +13,7 @@ export default class Icon extends Component<HTMLSpanElement> {
     fontVariationSettings?: FontVariationSettings,
   ) {
     super(document.createElement('span'));
-    this.root.classList.add('material-symbols-rounded');
+    this.addClass('material-symbols-rounded');
     this.root.textContent = iconName;
 
     if (fontVariationSettings) {

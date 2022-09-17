@@ -34,14 +34,14 @@ export default class Layout extends Component<HTMLDivElement> {
     const burgerBtn = document.createElement('button');
     const burgerIcon = new Burger();
     const minusIcon = new HorizontalRule();
-    burgerBtn.appendChild(burgerIcon.getRoot());
+    burgerBtn.appendChild(burgerIcon.root);
 
     burgerBtn.addEventListener('click', () => {
       burgerBtn.replaceChildren(
         (
-          burgerBtn.contains(burgerIcon.getRoot())
-            ? minusIcon.getRoot()
-            : burgerIcon.getRoot()
+          burgerBtn.contains(burgerIcon.root)
+            ? minusIcon.root
+            : burgerIcon.root
         )
       )
       this.aside.classList.toggle('active');
@@ -70,8 +70,8 @@ export default class Layout extends Component<HTMLDivElement> {
     this.menuProjects = new ProjectsMenu();
 
     navAside.append(
-      this.menu.getRoot(),
-      this.menuProjects.getRoot()
+      this.menu.root,
+      this.menuProjects.root
     );
 
     // Footer

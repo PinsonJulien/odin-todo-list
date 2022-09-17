@@ -11,14 +11,14 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
     control: Field<T>['control']
   ) {
     super(document.createElement('div'));
-    this.root.classList.add('form-field');
+    this.addClass('form-field');
 
     this.label = label;
     this.control = control;
 
     this.root.append(
-      this.label.getRoot(),
-      this.control.getRoot()
+      this.label.root,
+      this.control.root
     )
   }
 
@@ -39,11 +39,11 @@ export default class Field<T extends Controls> extends Component<HTMLDivElement>
   }
 
   public setValid(valid: boolean) : void {
-    this.root.classList.add((valid) ? 'valid' : 'invalid');
-    this.root.classList.remove((valid) ? 'invalid' : 'valid');
+    this.addClass((valid) ? 'valid' : 'invalid');
+    this.removeClass((valid) ? 'invalid' : 'valid')
   }
 
   public removeValidity() : void {
-    this.root.classList.remove('valid', 'invalid');
+    this.removeClass('valid', 'invalid')
   }
 }

@@ -6,7 +6,7 @@ export default class Menu extends Component<HTMLDivElement> {
 
   constructor(...anchors: RouterLink[]) {
     super(document.createElement('div'));
-    this.root.classList.add('menu');
+    this.addClass('menu');
 
     this.ul = document.createElement('ul');
     this.root.appendChild(this.ul);
@@ -17,14 +17,14 @@ export default class Menu extends Component<HTMLDivElement> {
   public insert (...anchors : RouterLink[]) : void {
     anchors.forEach((anchor) => {
       const li = document.createElement('li');
-      li.appendChild(anchor.getRoot());
+      li.appendChild(anchor.root);
       
       this.ul.appendChild(li);
     });
   }
 
   public remove(anchor: RouterLink) : void {
-    anchor.getRoot().parentElement.remove();
+    anchor.root.parentElement.remove();
   }
 
   public clear() : void {

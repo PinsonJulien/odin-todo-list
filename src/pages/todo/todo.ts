@@ -52,7 +52,7 @@ export abstract class Todo extends Page {
     super();
 
     this.todoController = todoController;
-    this.root.classList.add('todo-page');
+    this.addClass('todo-page');
 
     this.title = document.createElement('h1');
     this.title.textContent = title;
@@ -70,11 +70,11 @@ export abstract class Todo extends Page {
   public refresh(): void {
     const todos = this.fetch();
 
-    this.ulist.replaceChildren(this.newTodo.getRoot());
+    this.ulist.replaceChildren(this.newTodo.root);
 
     todos.forEach((todo) => {
       this.ulist.appendChild(
-        new TodoListItem(todo, this.todoController).getRoot()
+        new TodoListItem(todo, this.todoController).root
       );
     });
   }
@@ -120,12 +120,12 @@ class NewTodo extends Twofold<HTMLLIElement> {
     
     const btn = document.createElement('button');
     btn.classList.add('add-button');
-    btn.appendChild(new Add().getRoot());
+    btn.appendChild(new Add().root);
     btn.addEventListener('click', (e) => {
       this.changeSide(true);
     })
 
-    this.frontComponent.getRoot().append(btn);
+    this.frontComponent.root.append(btn);
   }
 }
 
@@ -193,13 +193,13 @@ class TodoListItem extends Twofold<HTMLLIElement> {
     const projectDiv = generateDiv('project', 'project', this.project);
 
     const updateButton = document.createElement('button');
-    updateButton.appendChild(new Edit().getRoot());
+    updateButton.appendChild(new Edit().root);
     updateButton.addEventListener('click', (e) => {
       this.changeSide(true);
     });
 
     const deleteButton = document.createElement('button');
-    deleteButton.appendChild(new Delete().getRoot());
+    deleteButton.appendChild(new Delete().root);
     deleteButton.addEventListener('click', (e) => {
       this.todoController.delete(this.todo);
       
@@ -213,7 +213,7 @@ class TodoListItem extends Twofold<HTMLLIElement> {
       deleteButton
     );
 
-    this.frontComponent.getRoot().append(
+    this.frontComponent.root.append(
       nameDiv.root,
       projectDiv.root,
       dueDateDiv.root,
@@ -275,7 +275,7 @@ class Form extends Component<HTMLFormElement> {
     this.submit = submit;
     this.cancel = cancel;
 
-    this.root.classList.add('todo-form');
+    this.addClass('todo-form');
     this.root.setAttribute('method', 'post');
 
     this.nameField = new Field<TextInput> (
@@ -331,10 +331,10 @@ class Form extends Component<HTMLFormElement> {
     );
 
     this.root.append(
-      this.nameField.getRoot(),
-      this.projectField.getRoot(),
-      this.dueDateField.getRoot(),      
-      this.priorityField.getRoot(),     
+      this.nameField.root,
+      this.projectField.root,
+      this.dueDateField.root,      
+      this.priorityField.root,     
       actionDiv,
     );
   
@@ -346,7 +346,7 @@ class Form extends Component<HTMLFormElement> {
 
   public setFields (todo: TodoModel) : void {
     this.nameField.setValue(todo.getName());
-    this.dueDateField.getControl().getRoot().valueAsDate = todo.getDueDate();    
+    this.dueDateField.getControl().root.valueAsDate = todo.getDueDate();    
     this.priorityField.setValue(todo.getPriority().toString());
     this.projectField.setValue(todo.getProject());
   }

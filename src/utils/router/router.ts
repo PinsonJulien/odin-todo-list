@@ -58,7 +58,7 @@ export default class Router extends Component<HTMLDivElement> {
 
     // If the page doesn't exist, 404 error
     if (!routerLink) {
-      this.root.replaceChildren(this.error404.getRoot());
+      this.root.replaceChildren(this.error404.root);
       return;
     }
 
@@ -66,7 +66,7 @@ export default class Router extends Component<HTMLDivElement> {
 
     const page = routerLink.getRoute().page;
 
-    this.root.replaceChildren(page.getRoot());
+    this.root.replaceChildren(page.root);
 
     // Trigger refresh of page;
     page.refresh();

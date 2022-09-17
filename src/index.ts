@@ -9,10 +9,10 @@ import Router from './utils/router/router';
 
 // Init the structure
 const layout = new Layout();
-document.body.appendChild(layout.getRoot());
+document.body.appendChild(layout.root);
 
 const router = new Router();
-layout.getMain().appendChild(router.getRoot());
+layout.getMain().appendChild(router.root);
 
 const todoController = new TodoController(
   layout.getMenuProjects(),
