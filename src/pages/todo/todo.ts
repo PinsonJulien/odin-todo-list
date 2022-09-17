@@ -215,9 +215,9 @@ class TodoListItem extends Twofold<HTMLLIElement> {
 
     this.frontComponent.getRoot().append(
       nameDiv.root,
-      dueDateDiv.root,
-      priorityDiv.root,
       projectDiv.root,
+      dueDateDiv.root,
+      priorityDiv.root,      
       actionDiv.root,
     );
 
@@ -332,9 +332,9 @@ class Form extends Component<HTMLFormElement> {
 
     this.root.append(
       this.nameField.getRoot(),
-      this.dueDateField.getRoot(),
-      this.priorityField.getRoot(),
       this.projectField.getRoot(),
+      this.dueDateField.getRoot(),      
+      this.priorityField.getRoot(),     
       actionDiv,
     );
   

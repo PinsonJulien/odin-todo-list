@@ -44,17 +44,9 @@
         height: 100%;
         font-size: 0.9em;
         padding: 1em;
-        
         display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: repeat(2fr, 5);
-        grid-template-areas: 
-          "name" 
-          "project" 
-          "due-date" 
-          "priority" 
-          "actions"
-        ;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(1fr, 5);
         gap: 1em;
         
         > div {
@@ -110,24 +102,7 @@
           }
         }
 
-        > .name {
-          grid-area: name;
-        }
-
-        > .due-date {
-          grid-area: due-date;
-        }
-
-        > .priority {
-          grid-area: priority;
-        }
-
-        > .project {
-          grid-area: project;
-        }
-
         > .actions {
-          grid-area: actions;
           display: flex;
           justify-content: space-around;
           
