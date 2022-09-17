@@ -4,6 +4,29 @@ export class Todo {
   private _priority: number;
   private _project: string;
 
+  public static readonly priorities : {value: number, name: string}[] = [
+    {
+      value: 0,
+      name: 'None'
+    },
+    {
+      value: 1,
+      name: 'For this month'
+    },
+    {
+      value: 2,
+      name: 'For this week'
+    },
+    {
+      value: 3,
+      name: 'For tomorrow'
+    },
+    {
+      value: 4,
+      name: 'For today'
+    }
+  ];
+
   constructor (
     name: Todo['_name'],
     dueDate: Todo['_dueDate'],
