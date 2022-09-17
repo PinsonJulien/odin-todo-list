@@ -11,7 +11,10 @@ body {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: hidden;
-  text-transform: capitalize;
+}
+
+*::first-letter {
+  text-transform: uppercase;
 }
 
 button {

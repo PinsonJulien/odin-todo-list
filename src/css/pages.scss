@@ -76,13 +76,7 @@
 
           > p,
           > label {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            flex: 1;
-            > * {
-              display: inline-block;
-            }
+            display: inline-block;
           }
         }
 

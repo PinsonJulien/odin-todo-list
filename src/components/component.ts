@@ -1,5 +1,5 @@
 export default class Component<T extends (HTMLElement | SVGElement)> {
-  protected readonly _root: T;
+  private readonly _root: T;
 
   constructor(root: T ) {
     this._root = root;
