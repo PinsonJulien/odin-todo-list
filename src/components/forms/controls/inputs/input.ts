@@ -17,9 +17,9 @@ export default abstract class Input extends Component<HTMLInputElement> implemen
     this.id = id;
     this.name = name;
 
-    this.root.setAttribute('type', type);
-    this.root.setAttribute('id', id);
-    this.root.setAttribute('name', name);
+    this.root.type = type;
+    this.root.id = id;
+    this.root.name = name;
   }
 
   public getValue(): string {

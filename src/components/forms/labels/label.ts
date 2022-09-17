@@ -14,6 +14,6 @@ export default class Label extends Component<HTMLLabelElement> {
     this.forTarget = forTarget;
 
     this.root.textContent = text;
-    this.root.setAttribute('for', forTarget);
+    this.root.htmlFor = forTarget;
   }
 }

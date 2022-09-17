@@ -15,7 +15,7 @@ export default class Layout extends Component<HTMLDivElement> {
   
   constructor () {
     super(document.createElement('div'));
-    this.root.setAttribute('id', 'layout');
+    this.root.id = "layout";
 
     this.root.append(
       this.header,

@@ -9,7 +9,7 @@ export default class Router extends Component<HTMLDivElement> {
 
   constructor() {
     super(document.createElement('div'));
-    this.root.setAttribute("id", "router");
+    this.root.id = "router";
   }
 
   public insert(...routes: Route[]): RouterLink[] {

@@ -276,7 +276,7 @@ class Form extends Component<HTMLFormElement> {
     this.cancel = cancel;
 
     this.addClass('todo-form');
-    this.root.setAttribute('method', 'post');
+    this.root.method = "post";
 
     this.nameField = new Field<TextInput> (
       new Label('Name', 'name'),

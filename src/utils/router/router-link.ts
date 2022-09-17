@@ -15,7 +15,7 @@ export default class RouterLink extends Component<HTMLAnchorElement> {
     this.router = router;
 
     this.root.textContent = this.route.name;
-    this.root.setAttribute('href', route.path);
+    this.root.href = route.path;
     this.root.addEventListener('click', (e) => {
       this.router.switchRouteByPath(route.path);
       e.preventDefault();
@@ -28,7 +28,7 @@ export default class RouterLink extends Component<HTMLAnchorElement> {
 
   setActive(active: boolean) : void {
     const activeClass = "active";
-    
+
     if (active) this.addClass(activeClass);
     else this.removeClass(activeClass);
   }

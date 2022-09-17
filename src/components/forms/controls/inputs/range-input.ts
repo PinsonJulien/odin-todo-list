@@ -18,8 +18,8 @@ export default class RangeInput extends Input {
     this.max = max;
     this.step = step;
 
-    this.root.setAttribute('min', min.toString());
-    this.root.setAttribute('max', max.toString());
-    this.root.setAttribute('step', step.toString());
+    this.root.min = min.toString();
+    this.root.max = max.toString();
+    this.root.step = step.toString();
   }
 }
