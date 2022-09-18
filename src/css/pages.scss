@@ -69,14 +69,17 @@
             height: 30px;
             max-height: 30px !important;
             width: 100% !important;
-            border: none;
-            margin: 0;
-            padding: 0;
           }
 
           > p,
           > label {
             display: inline-block;
+          }
+
+          > input,
+          > select {
+            border: none;
+            padding: 0 5% 0 5% !important;
           }
         }
 

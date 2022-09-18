@@ -1,7 +1,5 @@
 # Odin - Todo List
 
-# Work In Progress
-
 The 11th [project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) of The Odin Project, Javascript path.
 
 See the result [here](https://pinsonjulien.github.io/odin-todo-list/)
@@ -16,6 +14,8 @@ Github workflow builds the project to the gh-pages branch, which serves as the g
 Currently none
 
 ## Possible improvements
-- Maybe separate the new form buttom from the list, but add it next to the title, with a modal ?
+- Separate the new form buttom from the list and add it next to the title, with a modal.
+- public static methods may not be appropriate on model. I may implement services.
 
-## To do
+## Features to implement
+- Show available local storage space in the header and prevent insertion above the limit.

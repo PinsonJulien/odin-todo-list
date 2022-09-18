@@ -13,10 +13,12 @@ body {
   overflow-y: hidden;
 }
 
+// Every text has it's first letter in uppercase by default
 *::first-letter {
   text-transform: uppercase;
 }
 
+// Button
 button {
   display: flex;
   justify-content: center;
@@ -31,6 +33,12 @@ button:has(.material-symbols-rounded) {
   border: none;
 }
 
+// Input / select
+input, select {
+  box-sizing: border-box;
+}
+
+// Icons
 .material-symbols-rounded {
   color: inherit;
   font-size: inherit;
@@ -41,6 +49,7 @@ button:has(.material-symbols-rounded) {
   'opsz' 48;
 }
 
+// Scroll bar
 ::-webkit-scrollbar {
   width: 12px;
 }
