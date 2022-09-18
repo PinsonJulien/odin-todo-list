@@ -13,6 +13,6 @@ export class Project extends TodoPage {
   }
 
   protected fetch(): TodoModel[] {
-    return this.todoController.fetchByProject(this.project);
+    return this.todoController.getByProject(this.project);
   }
 };

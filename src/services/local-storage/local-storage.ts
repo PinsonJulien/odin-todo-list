@@ -1,60 +1,61 @@
+import Model from "../../models/model";
 import { byteSize } from "../../utils/byte";
 
-export default class LocalStorage<T> {
-  private readonly _factory: (obj: T) => T;
+export default abstract class LocalStorage<T extends Model> {
+  private readonly ctor: new (...args: any[]) => T;
   private readonly _key: string;
-  private readonly _sortingRule : (a: T, b: T) => number;
-  
   private readonly _values: T[];
 
   constructor(
-    factory: LocalStorage<T>['_factory'],
     key: LocalStorage<T>['_key'],
-    sortingRule: LocalStorage<T>['_sortingRule']
+    ctor: LocalStorage<T>['ctor']
   ) {
-    this._factory = factory;
     this._key = key;
-    this._sortingRule = sortingRule;
+    this.ctor = ctor;
 
     // get all local data
     this._values = this.read();
   }
 
-  public get values(): LocalStorage<T>['_values'] {
+  // Getters / Setters
+  public get values(): T[] {
     return this._values;
   }
 
-  protected get factory(): LocalStorage<T>['_factory'] {
-    return this._factory;
-  }
-
-  protected get key(): LocalStorage<T>['_key'] {
+  public get key(): string {
     return this._key;
   }
-
-  protected get sortingRule(): LocalStorage<T>['_sortingRule'] {
-    return this._sortingRule;
+  
+  // Abstract methods
+  public abstract sort(): void;
+  
+  protected instantiate(obj: T): T {
+    return new this.ctor(obj);
   }
 
-  private find(value: T) : number {
-    return this.values.findIndex((val) => val === value);
-  }
+  // Methods
 
+  // Initialize the values of the local storage.
   private read() : T[] {
     const jsonData: string = window.localStorage.getItem(this.key);
     const tmp: T[] = [];
 
     if (!jsonData) return [];
 
+    // 
     JSON.parse(jsonData).forEach((obj: T) => {
-      tmp.push(this.factory(obj));
+      tmp.push(this.instantiate(obj));
     });
 
     return tmp;
   }
 
-  public insert(value: T): boolean {
-    if (!this.canBeStored(value)) return false;
+  private getId(value: T) : number {
+    return this.values.findIndex((val) => val === value);
+  }
+
+  public create(value: T): boolean {
+    if (!LocalStorage.canBeStored(value)) return false;
     this.values.push(value);
     this.sort();
     this.save();
@@ -63,7 +64,7 @@ export default class LocalStorage<T> {
   }
 
   public update(target: T, value: T): boolean {
-    const id: number = this.find(target);
+    const id: number = this.getId(target);
     if (id < 0) return false;
 
     this.values[id] = value;
@@ -73,7 +74,7 @@ export default class LocalStorage<T> {
   }
 
   public delete(value: T): boolean {
-    const id: number = this.find(value);
+    const id: number = this.getId(value);
     if (id < 0) return false;
 
     this.values.splice(id, 1);
@@ -82,26 +83,23 @@ export default class LocalStorage<T> {
     return true;
   }
 
+  // Replace the existing data in local storage with the new one.
   private save(): void {
+    const tmp = this.values.map((val) => val.getRawObject());
     window.localStorage.setItem(
       this.key,
-      JSON.stringify(this.values)     
+      JSON.stringify(tmp)     
     );
   }
 
-  private sort(): void {
-    this.values.sort(
-      this.sortingRule
-    );
-  }
-
-  public canBeStored(value: T): boolean {
+  // Static methods
+  public static canBeStored(value: any): boolean {
     const remainingSpace = this.getRemainingSpace();
     const size = byteSize(JSON.stringify(value));
     return (remainingSpace - size) > 0; 
   }
 
-  public getRemainingSpace(): number {
+  public static getRemainingSpace(): number {
     // max 5mb
     const storageLimit = 5000000;
     return storageLimit - byteSize(JSON.stringify(window.localStorage));

@@ -19,4 +19,3 @@ Currently none
 - Maybe separate the new form buttom from the list, but add it next to the title, with a modal ?
 
 ## To do
-- Make cleaner code, more commented.

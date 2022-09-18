@@ -9,6 +9,6 @@ export class Today extends TodoPage {
   }
 
   protected fetch(): TodoModel[] {
-    return this.todoController.fetchByDate(new Date());
+    return this.todoController.getByDueDate(new Date());
   }
 };

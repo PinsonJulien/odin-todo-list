@@ -22,7 +22,7 @@ export default class NewTodo extends Twofold<HTMLLIElement, Div, TodoForm> {
           (todo: TodoModel) : void => {
             this.changeSide(false);
 
-            const operationSucceeded = todoController.create(todo);
+            const operationSucceeded = todoController.post(todo);
 
             // If the creation passed, refresh the page.
             if (!operationSucceeded) return;

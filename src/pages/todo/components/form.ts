@@ -130,36 +130,36 @@ export default class TodoForm extends Form {
     const priority = Number(this.priorityField.control.value);
     const project = this.projectField.control.value;
 
-    if (!this.todoController.validateName(name)) {
+    if (!TodoModel.nameValidation(name)) {
       hasInvalidField = true;
       this.nameField.setValid(false);
     } 
     else this.nameField.setValid(true);
 
-    if (!this.todoController.validateDueDate(dueDate)) {
+    if (!TodoModel.dueDateValidation(dueDate)) {
       hasInvalidField = true;
       this.dueDateField.setValid(false);
     }
     else this.dueDateField.setValid(true);
 
-    if (!this.todoController.validatePriority(priority)) {
+    if (!TodoModel.priorityValidation(priority)) {
       hasInvalidField = true;
       this.priorityField.setValid(false);
     } else this.priorityField.setValid(true);
 
-    if (!this.todoController.validateProject(project)) {
+    if (!TodoModel.projectValidation(project)) {
       hasInvalidField = true;
       this.projectField.setValid(false);
     } else this.projectField.setValid(true);
 
     if (!hasInvalidField) { 
       // Validation passed
-      const todo = new TodoModel(
+      const todo = new TodoModel({
         name, 
         dueDate, 
         priority, 
         project
-      );
+      });
 
       this.submit(todo);
       this.resetValidity();

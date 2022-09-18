@@ -109,7 +109,6 @@ export default class TodoCard extends Twofold<HTMLLIElement, Div, TodoForm> {
 
     const name = this.todo.name;
     this.name.textContent = name;
-
     const dueDate = this.todo.dueDate.toLocaleDateString();
     this.dueDate.textContent = dueDate;
 
@@ -125,7 +124,7 @@ export default class TodoCard extends Twofold<HTMLLIElement, Div, TodoForm> {
   private update (todo: TodoModel) : void {
     this.changeSide(false);
 
-    const operationSucceeded = this.todoController.update(this.todo, todo);
+    const operationSucceeded = this.todoController.put(this.todo, todo);
 
     // If the update passed, change the UI.
     if (!operationSucceeded) return;

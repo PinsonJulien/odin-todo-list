@@ -7,6 +7,6 @@ export class All extends TodoPage {
   }
 
   protected fetch(): TodoModel[] {
-    return this.todoController.fetchAll();
+    return this.todoController.get();
   }
 };

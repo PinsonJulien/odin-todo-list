@@ -1,24 +1,23 @@
 import ProjectsMenu from "../layout/projects-menu";
 import { Todo as TodoModel } from "../models/todo";
 import { Project } from "../pages/todo/project";
-import LocalStorage from "../services/local-storage/local-storage";
-import TodoLocalStorage from "../services/local-storage/todo-local-storage";
 import Route from "../utils/router/route";
 import Router from "../utils/router/router";
 import RouterLink from "../utils/router/router-link";
+import Controller from "./controller";
 
-export class Todo {
+export class Todo extends Controller<TodoModel> {
   private readonly projectsMenu : ProjectsMenu;
   private readonly router: Router;
-  private readonly todoLocalStorage: LocalStorage<TodoModel>;
 
   constructor(
     projectsMenu: Todo['projectsMenu'],
     router: Todo['router']
   ) {
+    super();
+
     this.projectsMenu = projectsMenu;
     this.router = router;
-    this.todoLocalStorage = new TodoLocalStorage();
 
     // Generate dynamic routes
     const projects = this.getProjects();
@@ -37,52 +36,26 @@ export class Todo {
     this.refreshProjectsMenu();
   }
 
-  public fetchAll(): TodoModel[] {
-    return this.todoLocalStorage.values;
+  // Abstract methods
+  public get(): TodoModel[] {
+    return TodoModel.get();
   }
 
-  public fetchByProject(project: TodoModel['project']): TodoModel[]  {
-    return this.fetchAll().filter((todo) => todo.project === project);
-  }
+  public post(value: TodoModel): TodoModel {
+    if (!this.validate(value)) return null;
 
-  public fetchByDate(d: Date): TodoModel[]  {
-    return this.fetchAll().filter((todo) => { 
-      const todoDate = todo.dueDate;
-      return (
-        todoDate.getDate() === d.getDate() &&
-        todoDate.getMonth() === d.getMonth() &&
-        todoDate.getFullYear() === d.getFullYear()
-      );
-    });
-  }
-
-  public fetchByDateRange(d1: Date, d2: Date): TodoModel[]  {
-    return this.fetchAll().filter((todo) => {
-      const dateTime = todo.dueDate.getTime();
-      return (
-        dateTime >= d1.getTime() 
-        && 
-        dateTime <= d2.getTime()
-      );
-    });
-  }
-
-  public create (todo: TodoModel) : boolean {
-    if (!this.validate(todo)) return false;
-    
-    this.todoLocalStorage.insert(todo);
-
+    const todo = TodoModel.post(value);
 
     // Try to add if it doesn't exist yet.
     this.routerUpdate(todo, "create");
 
-    return true;
+    return todo;
   }
 
-  public update(target: TodoModel, updated: TodoModel): boolean {
-    if (!this.validate(updated)) return false;
+  public put(target: TodoModel, updated: TodoModel): TodoModel {
+    if (!this.validate(updated)) return null;
 
-    this.todoLocalStorage.update(target, updated);
+    TodoModel.put(target, updated);
 
     // The project has changed, the UI must be updated.
     if (target.project !== updated.project) {
@@ -94,65 +67,37 @@ export class Todo {
       // Try to add if it doesn't exist yet.
       this.routerUpdate(updated, "create");
     }
-    
-    return true;
-  }
 
-  public delete(target: TodoModel): boolean {
-    this.todoLocalStorage.delete(target);
+    return updated;
+  }
+  public delete(target: TodoModel): TodoModel {
+    TodoModel.delete(target);
 
     // Try to delete if it doesn't exist anymore
     this.routerUpdate(target, "delete");
 
-    return true;
+    return target;
   }
 
-  // Validations
-  public validate(todo: TodoModel): boolean {
-    return ( 
-      this.validateName(todo.name) ||
-      this.validateDueDate(todo.dueDate) ||
-      this.validatePriority(todo.priority) ||
-      this.validateProject(todo.project)
-    );
+  public validate(value: TodoModel): boolean {
+    return TodoModel.validation(value);
   }
 
-  public validateName(name: TodoModel['name']): boolean {
-    if (!name) return false;
-
-    return true;
+  // Methods
+  public getByProject(project: TodoModel['_project']): TodoModel[] {
+    return TodoModel.getByProject(project);
   }
 
-  public validateDueDate(dueDate: TodoModel['dueDate']): boolean {
-    if (!dueDate) return false;
-    if (isNaN(dueDate.getTime())) return false;
-
-    return true;
+  public getByDueDate(dueDate: TodoModel['_dueDate']): TodoModel[] {
+    return TodoModel.getByDueDate(dueDate);
   }
 
-  public validatePriority(priority: TodoModel['priority']): boolean {
-    if (priority === null) return false;
-
-    return true;
-  }
-
-  public validateProject(project: TodoModel['project']): boolean {
-    if (!project) return false;
-
-    return true;
+  public getByDueDateRange(d1: TodoModel['_dueDate'], d2: TodoModel['_dueDate']): TodoModel[] {
+    return TodoModel.getByDueDateRange(d1, d2);
   }
 
   public getProjects(): TodoModel['project'][] {
-    const projects: TodoModel['project'][] = [];
-    
-    this.fetchAll().forEach((todo) => {
-      const project = todo.project;
-      if (project !=="" && !projects.includes(project)) projects.push(project);
-    });
-
-    projects.sort();
-
-    return projects;
+    return TodoModel.getProjects();
   }
 
   private refreshProjectsMenu(): void {

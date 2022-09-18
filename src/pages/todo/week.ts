@@ -12,6 +12,6 @@ export class Week extends TodoPage {
     const today = new Date();
     const end = new Date();
     end.setDate(today.getDate() + 7);
-    return this.todoController.fetchByDateRange(today, end);    
+    return this.todoController.getByDueDateRange(today, end);    
   }
 };
